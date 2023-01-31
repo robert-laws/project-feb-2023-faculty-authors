@@ -1,5 +1,10 @@
 import React from 'react';
+import { Heading, Container } from '../components';
 
 export const Contact = () => {
-  return <div>Contact</div>;
+  return (
+    <Container>
+      <Heading>Contact</Heading>
+    </Container>
+  );
 };

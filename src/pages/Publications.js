@@ -1,5 +1,9 @@
-import React from 'react';
+import { Container, Heading } from '../components';
 
 export const Publications = () => {
-  return <div>Publications</div>;
+  return (
+    <Container>
+      <Heading>Publications</Heading>
+    </Container>
+  );
 };

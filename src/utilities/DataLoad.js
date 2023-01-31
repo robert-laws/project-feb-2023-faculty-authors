@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { db } from '../firebase-config';
+import { db } from '../firebase/firebase-config';
 import { addDoc, collection } from 'firebase/firestore';
 import allData from '../data/faculty-data-jan-31-2022.json';
 

@@ -1,8 +1,10 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {} from './pages';
+
 function App() {
   return (
-    <div>
-      <h1>App</h1>
-      <div></div>
+    <div className='bg-white flex flex-col min-h-screen'>
+      <Router></Router>
     </div>
   );
 }

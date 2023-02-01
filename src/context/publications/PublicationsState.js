@@ -1,7 +1,13 @@
 import { useReducer, useCallback } from 'react';
 // import { v4 as uuid } from 'uuid';
 import { db } from '../../firebase/firebase-config';
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  updateDoc,
+} from 'firebase/firestore';
 import {
   GET_ALL_PUBLICATIONS,
   GET_FILTERED_PUBLICATIONS,
@@ -9,6 +15,7 @@ import {
   GET_SINGLE_PUBLICATION,
   SINGLE_PUBLICATION_ERROR,
   RESET_SINGLE_PUBLICATION_LOADING,
+  UPDATE_SINGLE_PUBLICATION,
 } from '../types';
 import PublicationsContext from './publicationsContext';
 import publicationsReducer from './publicationsReducer';
@@ -99,6 +106,39 @@ const PublicationsState = ({ children }) => {
     });
   }, [dispatch]);
 
+  const updateSinglePublication = useCallback(
+    async (publicationData) => {
+      const docId = publicationData.id;
+      delete publicationData.id;
+      const docRef = doc(db, 'publications', docId);
+
+      try {
+        const updatedPublication = await updateDoc(docRef, publicationData);
+
+        if (updatedPublication.exists()) {
+          dispatch({
+            type: UPDATE_SINGLE_PUBLICATION,
+            payload: {
+              ...updatedPublication.data(),
+              id: updatedPublication.id,
+            },
+          });
+        } else {
+          dispatch({
+            type: SINGLE_PUBLICATION_ERROR,
+            payload: 'Error Updating Publication',
+          });
+        }
+      } catch (error) {
+        dispatch({
+          type: SINGLE_PUBLICATION_ERROR,
+          payload: `Database Error: ${error.message}`,
+        });
+      }
+    },
+    [dispatch]
+  );
+
   return (
     <PublicationsContext.Provider
       value={{
@@ -113,6 +153,7 @@ const PublicationsState = ({ children }) => {
         filterPublications,
         getSinglePublicationById,
         resetSinglePublicationLoading,
+        updateSinglePublication,
       }}
     >
       {children}

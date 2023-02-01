@@ -5,6 +5,7 @@ import {
   PUBLICATIONS_ERROR,
   SINGLE_PUBLICATION_ERROR,
   RESET_SINGLE_PUBLICATION_LOADING,
+  UPDATE_SINGLE_PUBLICATION,
 } from '../types';
 
 const publicationsReducer = (state, action) => {
@@ -52,6 +53,17 @@ const publicationsReducer = (state, action) => {
       return {
         ...state,
         isLoadingSingle: true,
+      };
+
+    case UPDATE_SINGLE_PUBLICATION:
+      return {
+        ...state,
+        publications: state.publications.map((publication) =>
+          publication.id === action.payload.id ? action.payload : publication
+        ),
+        filteredPublications: state.publications.map((publication) =>
+          publication.id === action.payload.id ? action.payload : publication
+        ),
       };
 
     default:

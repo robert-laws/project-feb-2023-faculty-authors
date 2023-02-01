@@ -1,5 +1,6 @@
 import React from 'react';
 import { Heading, Container } from '../components';
+// import { DataLoad } from '../utilities';
 
 export const Home = () => {
   // TODO: Add full-text search feature
@@ -8,6 +9,7 @@ export const Home = () => {
   return (
     <Container>
       <Heading>Home Page</Heading>
+      {/* <DataLoad /> */}
     </Container>
   );
 };

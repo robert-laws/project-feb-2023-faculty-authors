@@ -9,6 +9,8 @@ import {
   NotFound,
 } from './pages';
 
+import { CreatePublication, UpdatePublication } from './pages/admin';
+
 function App() {
   return (
     <div className='bg-white flex flex-col min-h-screen'>
@@ -23,6 +25,8 @@ function App() {
           <Route path='/contact' element={<Contact />} />
 
           {/* Private Routes */}
+          <Route path='/admin/new' element={<CreatePublication />} />
+          <Route path='/admin/edit/:id' element={<UpdatePublication />} />
 
           {/* 404 */}
           <Route path='*' element={<NotFound />} />

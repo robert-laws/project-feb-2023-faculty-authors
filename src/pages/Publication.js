@@ -23,9 +23,9 @@ export const Publication = () => {
     }
   }, [getSinglePublicationById, id]);
 
-  // const handleEditClick = () => {
-  //   navigate(`/admin/edit/${id}`);
-  // };
+  const handleEditClick = () => {
+    navigate(`/admin/edit/${id}`);
+  };
 
   return (
     <Container>
@@ -35,12 +35,19 @@ export const Publication = () => {
         </div>
       ) : singlePublication ? (
         <div className='px-4 py-5 sm:px-6'>
-          <div className='mb-4'>
+          <div className='mb-4 flex place-content-between'>
             <Heading>
               {singlePublication && singlePublication.title
                 ? singlePublication.title
                 : singlePublication.sourceTitle}
             </Heading>
+            <button
+              type='button'
+              className='inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+              onClick={handleEditClick}
+            >
+              Edit this Publication
+            </button>
           </div>
           <div className='border-t border-gray-200 px-4 py-5 sm:p-0'>
             <dl className='sm:divide-y sm:divide-gray-200'>
@@ -139,16 +146,20 @@ export const Publication = () => {
               </div>
               <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
                 <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-                  Link
+                  Permalink
                 </dt>
                 <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-                  <a
-                    rel='noreferrer'
-                    target='_blank'
-                    href={`${singlePublication.link}`}
-                  >
-                    Resource Link
-                  </a>
+                  {singlePublication.link ? (
+                    <a
+                      rel='noreferrer'
+                      target='_blank'
+                      href={`${singlePublication.link}`}
+                    >
+                      Resource Link
+                    </a>
+                  ) : (
+                    ''
+                  )}
                 </dd>
               </div>
               <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>

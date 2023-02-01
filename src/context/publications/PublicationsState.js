@@ -49,6 +49,16 @@ const PublicationsState = ({ children }) => {
     }
   }, [dispatch]);
 
+  const filterPublications = useCallback(
+    (results) => {
+      dispatch({
+        type: GET_FILTERED_PUBLICATIONS,
+        payload: results,
+      });
+    },
+    [dispatch]
+  );
+
   return (
     <PublicationsContext.Provider
       value={{
@@ -57,6 +67,7 @@ const PublicationsState = ({ children }) => {
         isLoading: state.isLoading,
         publicationsError: state.publicationsError,
         getAllPublications,
+        filterPublications,
       }}
     >
       {children}

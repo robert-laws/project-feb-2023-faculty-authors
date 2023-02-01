@@ -6,6 +6,7 @@ import {
   Publications,
   About,
   Contact,
+  Authors,
   NotFound,
 } from './pages';
 
@@ -23,6 +24,8 @@ function App() {
           <Route path='/publications' element={<Publications />} />
           <Route path='/about' element={<About />} />
           <Route path='/contact' element={<Contact />} />
+
+          <Route path='/authors' element={<Authors />} />
 
           {/* Private Routes */}
           <Route path='/admin/new' element={<CreatePublication />} />

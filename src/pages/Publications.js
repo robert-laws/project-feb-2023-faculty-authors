@@ -12,6 +12,7 @@ export const Publications = () => {
     publicationsError,
     getAllPublications,
     filterPublications,
+    resetSinglePublicationLoading,
   } = useContext(PublicationsContext);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,6 +40,10 @@ export const Publications = () => {
       getAllPublications();
     }
   }, [publications, getAllPublications]);
+
+  useEffect(() => {
+    resetSinglePublicationLoading();
+  }, [resetSinglePublicationLoading]);
 
   useEffect(() => {
     if (publications.length > 0) {

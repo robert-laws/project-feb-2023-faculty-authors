@@ -1,6 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navigation, Footer } from './components';
-import { Home, Publications, About, Contact, NotFound } from './pages';
+import {
+  Home,
+  Publication,
+  Publications,
+  About,
+  Contact,
+  NotFound,
+} from './pages';
 
 function App() {
   return (
@@ -10,6 +17,7 @@ function App() {
         <Routes>
           {/* Public Routes */}
           <Route path='/' element={<Home />} />
+          <Route path='/publication/:id' element={<Publication />} />
           <Route path='/publications' element={<Publications />} />
           <Route path='/about' element={<About />} />
           <Route path='/contact' element={<Contact />} />

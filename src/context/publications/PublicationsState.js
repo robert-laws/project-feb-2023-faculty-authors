@@ -1,11 +1,14 @@
 import { useReducer, useCallback } from 'react';
 // import { v4 as uuid } from 'uuid';
 import { db } from '../../firebase/firebase-config';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 import {
   GET_ALL_PUBLICATIONS,
   GET_FILTERED_PUBLICATIONS,
   PUBLICATIONS_ERROR,
+  GET_SINGLE_PUBLICATION,
+  SINGLE_PUBLICATION_ERROR,
+  RESET_SINGLE_PUBLICATION_LOADING,
 } from '../types';
 import PublicationsContext from './publicationsContext';
 import publicationsReducer from './publicationsReducer';
@@ -16,6 +19,9 @@ const PublicationsState = ({ children }) => {
     filteredPublications: [],
     isLoading: true,
     publicationsError: null,
+    singlePublication: null,
+    isLoadingSingle: true,
+    singlePublicationError: null,
   };
 
   const [state, dispatch] = useReducer(publicationsReducer, initialState);
@@ -49,6 +55,34 @@ const PublicationsState = ({ children }) => {
     }
   }, [dispatch]);
 
+  const getSinglePublicationById = useCallback(
+    async (docId) => {
+      const docRef = doc(db, 'publications', docId);
+
+      try {
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          dispatch({
+            type: GET_SINGLE_PUBLICATION,
+            payload: { ...docSnap.data(), id: docSnap.id },
+          });
+        } else {
+          dispatch({
+            type: SINGLE_PUBLICATION_ERROR,
+            payload: 'No publication found',
+          });
+        }
+      } catch (error) {
+        dispatch({
+          type: SINGLE_PUBLICATION_ERROR,
+          payload: `Database Error: ${error.message}`,
+        });
+      }
+    },
+    [dispatch]
+  );
+
   const filterPublications = useCallback(
     (results) => {
       dispatch({
@@ -59,6 +93,12 @@ const PublicationsState = ({ children }) => {
     [dispatch]
   );
 
+  const resetSinglePublicationLoading = useCallback(() => {
+    dispatch({
+      type: RESET_SINGLE_PUBLICATION_LOADING,
+    });
+  }, [dispatch]);
+
   return (
     <PublicationsContext.Provider
       value={{
@@ -66,8 +106,13 @@ const PublicationsState = ({ children }) => {
         filteredPublications: state.filteredPublications,
         isLoading: state.isLoading,
         publicationsError: state.publicationsError,
+        singlePublication: state.singlePublication,
+        isLoadingSingle: state.isLoadingSingle,
+        singlePublicationError: state.singlePublicationError,
         getAllPublications,
         filterPublications,
+        getSinglePublicationById,
+        resetSinglePublicationLoading,
       }}
     >
       {children}

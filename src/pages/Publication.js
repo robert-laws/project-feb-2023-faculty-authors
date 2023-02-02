@@ -11,6 +11,7 @@ export const Publication = () => {
     isLoadingSingle,
     singlePublicationError,
     getSinglePublicationById,
+    deleteSinglePublication,
   } = useContext(PublicationsContext);
 
   useEffect(() => {
@@ -27,6 +28,17 @@ export const Publication = () => {
     navigate(`/admin/edit/${id}`);
   };
 
+  const handleDeleteClick = () => {
+    const answer = window.confirm(
+      'Are you sure you want to delete this publication?'
+    );
+
+    if (answer) {
+      deleteSinglePublication(id);
+      navigate('/publications');
+    }
+  };
+
   return (
     <Container>
       {isLoadingSingle && !singlePublicationError ? (
@@ -35,19 +47,28 @@ export const Publication = () => {
         </div>
       ) : singlePublication ? (
         <div className='px-4 py-5 sm:px-6'>
-          <div className='mb-4 flex place-content-between'>
+          <div className='mb-4 flex flex-col'>
             <Heading>
               {singlePublication && singlePublication.title
                 ? singlePublication.title
                 : singlePublication.sourceTitle}
             </Heading>
-            <button
-              type='button'
-              className='inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
-              onClick={handleEditClick}
-            >
-              Edit this Publication
-            </button>
+            <div className='flex justify-end mt-4'>
+              <button
+                type='button'
+                className='inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+                onClick={handleEditClick}
+              >
+                Edit this Publication
+              </button>
+              <button
+                type='button'
+                className='inline-flex items-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 ml-4'
+                onClick={handleDeleteClick}
+              >
+                Delete this Publication
+              </button>
+            </div>
           </div>
           <div className='border-t border-gray-200 px-4 py-5 sm:p-0'>
             <dl className='sm:divide-y sm:divide-gray-200'>

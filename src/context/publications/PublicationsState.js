@@ -6,7 +6,9 @@ import {
   getDocs,
   doc,
   getDoc,
+  addDoc,
   updateDoc,
+  deleteDoc,
 } from 'firebase/firestore';
 import {
   GET_ALL_PUBLICATIONS,
@@ -15,7 +17,9 @@ import {
   GET_SINGLE_PUBLICATION,
   SINGLE_PUBLICATION_ERROR,
   RESET_SINGLE_PUBLICATION_LOADING,
+  CREATE_SINGLE_PUBLICATION,
   UPDATE_SINGLE_PUBLICATION,
+  DELETE_SINGLE_PUBLICATION,
 } from '../types';
 import PublicationsContext from './publicationsContext';
 import publicationsReducer from './publicationsReducer';
@@ -106,6 +110,31 @@ const PublicationsState = ({ children }) => {
     });
   }, [dispatch]);
 
+  const createSinglePublication = useCallback(
+    async (newPublication) => {
+      const pubsRef = collection(db, 'publications');
+      let newDocId = '';
+
+      try {
+        const newDoc = await addDoc(pubsRef, newPublication);
+        newDocId = newDoc.id;
+
+        dispatch({
+          type: CREATE_SINGLE_PUBLICATION,
+          payload: { ...newPublication, id: newDocId },
+        });
+      } catch (error) {
+        dispatch({
+          type: SINGLE_PUBLICATION_ERROR,
+          payload: `Database Error: ${error.message}`,
+        });
+      }
+
+      return newDocId;
+    },
+    [dispatch]
+  );
+
   const updateSinglePublication = useCallback(
     async (publicationData) => {
       const docId = publicationData.id;
@@ -139,6 +168,27 @@ const PublicationsState = ({ children }) => {
     [dispatch]
   );
 
+  const deleteSinglePublication = useCallback(
+    async (docId) => {
+      const docRef = doc(db, 'publications', docId);
+
+      try {
+        await deleteDoc(docRef);
+
+        dispatch({
+          type: DELETE_SINGLE_PUBLICATION,
+          payload: docId,
+        });
+      } catch (error) {
+        dispatch({
+          type: SINGLE_PUBLICATION_ERROR,
+          payload: `Database Error: ${error.message}`,
+        });
+      }
+    },
+    [dispatch]
+  );
+
   return (
     <PublicationsContext.Provider
       value={{
@@ -153,7 +203,9 @@ const PublicationsState = ({ children }) => {
         filterPublications,
         getSinglePublicationById,
         resetSinglePublicationLoading,
+        createSinglePublication,
         updateSinglePublication,
+        deleteSinglePublication,
       }}
     >
       {children}

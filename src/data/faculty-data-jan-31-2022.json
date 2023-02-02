@@ -44,8 +44,8 @@
     "callNumber": "",
     "guqAffiliated": "Yes",
     "cirsSponsored": "Yes",
-    "fullText": "",
-    "publishingGroup": ["All GU-Q"]
+    "publishingGroup": "Faculty (FT)",
+    "fullText": ""
   },
   {
     "pubId": 1002,

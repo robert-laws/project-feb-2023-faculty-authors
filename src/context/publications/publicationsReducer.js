@@ -5,7 +5,9 @@ import {
   PUBLICATIONS_ERROR,
   SINGLE_PUBLICATION_ERROR,
   RESET_SINGLE_PUBLICATION_LOADING,
+  CREATE_SINGLE_PUBLICATION,
   UPDATE_SINGLE_PUBLICATION,
+  DELETE_SINGLE_PUBLICATION,
 } from '../types';
 
 const publicationsReducer = (state, action) => {
@@ -55,6 +57,13 @@ const publicationsReducer = (state, action) => {
         isLoadingSingle: true,
       };
 
+    case CREATE_SINGLE_PUBLICATION:
+      return {
+        ...state,
+        publications: [...state.publications, action.payload],
+        filteredPublications: [...state.publications, action.payload],
+      };
+
     case UPDATE_SINGLE_PUBLICATION:
       return {
         ...state,
@@ -63,6 +72,17 @@ const publicationsReducer = (state, action) => {
         ),
         filteredPublications: state.publications.map((publication) =>
           publication.id === action.payload.id ? action.payload : publication
+        ),
+      };
+
+    case DELETE_SINGLE_PUBLICATION:
+      return {
+        ...state,
+        publications: state.publications.filter(
+          (publication) => publication.id !== action.payload
+        ),
+        filteredPublications: state.publications.filter(
+          (publication) => publication.id !== action.payload
         ),
       };
 

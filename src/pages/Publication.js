@@ -273,7 +273,7 @@ export const Publication = () => {
                   GUQ Affiliated
                 </dt>
                 <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-                  {singlePublication.guqAffiliated}
+                  {singlePublication.publicationAffiliation}
                 </dd>
               </div>
               <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>

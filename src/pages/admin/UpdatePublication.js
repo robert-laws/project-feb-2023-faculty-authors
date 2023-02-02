@@ -43,7 +43,7 @@ export const UpdatePublication = () => {
     eid: '',
     callNumber: '',
     sustainableDevelopmentGoals: [''],
-    guqAffiliated: '',
+    publicationAffiliation: '',
     cirsSponsored: '',
     publishingGroup: '',
     fullText: '',

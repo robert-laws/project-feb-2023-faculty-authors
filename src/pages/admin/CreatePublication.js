@@ -38,7 +38,7 @@ export const CreatePublication = () => {
     eid: '',
     callNumber: '',
     sustainableDevelopmentGoals: [''],
-    guqAffiliated: '',
+    publicationAffiliation: '',
     cirsSponsored: '',
     publishingGroup: '',
     fullText: '',

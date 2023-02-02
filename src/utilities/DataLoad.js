@@ -40,8 +40,9 @@ export const DataLoad = () => {
       eid: dataFields.eid,
       sustainableDevelopmentGoals: dataFields.sustainableDevelopmentGoals,
       callNumber: dataFields.callNumber,
-      guqAffiliated: dataFields.guqAffiliated,
+      publicationAffiliation: dataFields.publicationAffiliation,
       cirsSponsored: dataFields.cirsSponsored,
+      publishingGroup: dataFields.publishingGroup,
       fullText: dataFields.fullText,
     });
   };

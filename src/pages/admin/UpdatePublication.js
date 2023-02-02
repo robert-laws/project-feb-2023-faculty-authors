@@ -45,6 +45,7 @@ export const UpdatePublication = () => {
     sustainableDevelopmentGoals: [''],
     guqAffiliated: '',
     cirsSponsored: '',
+    publishingGroup: '',
     fullText: '',
   });
 
@@ -792,11 +793,51 @@ export const UpdatePublication = () => {
                         <option key='Select' value=''>
                           Select...
                         </option>
-                        <option key='Yes' value='Yes'>
-                          Yes
+                        <option key='GUQ' value='GUQ'>
+                          GUQ
                         </option>
-                        <option key='No' value='No'>
-                          No
+                        <option key='Non-GUQ' value='Non-GUQ'>
+                          Non-GUQ
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className='sm:col-span-1'>
+                    <label
+                      htmlFor='publishingGroup'
+                      className='block text-sm font-medium text-gray-700'
+                    >
+                      Publishing Group
+                    </label>
+                    <div className='mt-1'>
+                      <select
+                        id='publishingGroup'
+                        name='publishingGroup'
+                        className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
+                        onChange={(e) => handleTextChange(e)}
+                        value={editedPublication.publishingGroup}
+                      >
+                        <option key='Select' value=''>
+                          Select...
+                        </option>
+                        <option key='Faculty (FT)' value='Faculty (FT)'>
+                          Faculty (FT)
+                        </option>
+                        <option key='Students' value='Students'>
+                          Students
+                        </option>
+                        <option
+                          key='Staff (excluding CIRS)'
+                          value='Staff (excluding CIRS)'
+                        >
+                          Staff (excluding CIRS)
+                        </option>
+                        <option key='CIRS Staff' value='CIRS Staff'>
+                          CIRS Staff
+                        </option>
+                        <option key='Other' value='Other'>
+                          Other
                         </option>
                       </select>
                     </div>

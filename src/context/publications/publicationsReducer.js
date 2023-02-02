@@ -60,6 +60,7 @@ const publicationsReducer = (state, action) => {
     case CREATE_SINGLE_PUBLICATION:
       return {
         ...state,
+        isLoadingSingle: true,
         publications: [...state.publications, action.payload],
         filteredPublications: [...state.publications, action.payload],
       };
@@ -67,6 +68,7 @@ const publicationsReducer = (state, action) => {
     case UPDATE_SINGLE_PUBLICATION:
       return {
         ...state,
+        isLoadingSingle: true,
         publications: state.publications.map((publication) =>
           publication.id === action.payload.id ? action.payload : publication
         ),
@@ -78,6 +80,7 @@ const publicationsReducer = (state, action) => {
     case DELETE_SINGLE_PUBLICATION:
       return {
         ...state,
+        isLoadingSingle: true,
         publications: state.publications.filter(
           (publication) => publication.id !== action.payload
         ),

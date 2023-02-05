@@ -2,11 +2,12 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navigation, Footer } from './components';
 import {
   Home,
-  Publication,
   Publications,
+  Publication,
   About,
   Contact,
   Authors,
+  Author,
   NotFound,
 } from './pages';
 
@@ -20,12 +21,13 @@ function App() {
         <Routes>
           {/* Public Routes */}
           <Route path='/' element={<Home />} />
-          <Route path='/publication/:id' element={<Publication />} />
           <Route path='/publications' element={<Publications />} />
+          <Route path='/publications/:id' element={<Publication />} />
           <Route path='/about' element={<About />} />
           <Route path='/contact' element={<Contact />} />
 
           <Route path='/authors' element={<Authors />} />
+          <Route path='/authors/:id' element={<Author />} />
 
           {/* Private Routes */}
           <Route path='/admin/new' element={<CreatePublication />} />

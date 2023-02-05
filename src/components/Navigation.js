@@ -6,6 +6,7 @@ export const Navigation = () => {
   const navigation = [
     { name: 'Home', href: '/' },
     { name: 'Publications', href: '/publications' },
+    { name: 'Authors', href: '/authors' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
     { name: 'New', href: '/admin/new' },

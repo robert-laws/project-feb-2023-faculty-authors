@@ -71,13 +71,12 @@ export const UpdatePublication = () => {
   ];
 
   const documentTypes = [
-    'Article ',
     'Authored Book',
     'Book Chapter',
     'Conference Paper',
-    'Editorial ',
+    'Editorial',
     'Edited Book',
-    'Journal Articles',
+    'Journal Article',
     'Research Paper',
     'Other',
   ];

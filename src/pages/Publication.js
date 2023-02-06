@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Heading, Container, Spinner } from '../components';
 import PublicationsContext from '../context/publications/publicationsContext';
 
@@ -77,7 +77,12 @@ export const Publication = () => {
                   Author
                 </dt>
                 <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-                  {singlePublication.firstName} {singlePublication.lastName}
+                  <Link
+                    className='text-blue-500 hover:underline'
+                    to={`/authors/${singlePublication.authorId}`}
+                  >
+                    {singlePublication.firstName} {singlePublication.lastName}
+                  </Link>
                 </dd>
               </div>
               <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>

@@ -66,21 +66,26 @@ const AuthorsState = ({ children }) => {
   }, [dispatch]);
 
   const getSingleAuthorById = useCallback(
-    async (id) => {
-      const authorRef = doc(db, 'authors', id);
+    async (authorId) => {
+      const authorRef = collection(db, 'authors');
+      const q = query(authorRef, where('authorId', '==', +authorId));
 
       try {
-        const docSnap = await getDoc(authorRef);
-
-        if (docSnap.exists()) {
-          dispatch({
-            type: GET_SINGLE_AUTHOR,
-            payload: { ...docSnap.data(), id: docSnap.id },
-          });
-        } else {
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
           dispatch({
             type: SINGLE_AUTHOR_ERROR,
             payload: 'Author not found',
+          });
+        } else {
+          let singleAuthor = [];
+          querySnapshot.forEach((doc) => {
+            singleAuthor.push({ ...doc.data(), id: doc.id });
+          });
+
+          dispatch({
+            type: GET_SINGLE_AUTHOR,
+            payload: singleAuthor[0],
           });
         }
       } catch (error) {

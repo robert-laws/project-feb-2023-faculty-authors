@@ -46,7 +46,7 @@ export const Authors = () => {
                   <div className='flex items-center space-x-3'>
                     <h3 className='truncate text-sm font-medium text-gray-900'>
                       <Link
-                        to={`/authors/${author.id}`}
+                        to={`/authors/${author.authorId}`}
                         className='hover:text-teal-600'
                       >
                         {author.firstName} {author.lastName}

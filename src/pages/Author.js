@@ -141,6 +141,7 @@ export const Author = () => {
                       <Card
                         key={publication.pubId}
                         docId={publication.id}
+                        authorId={publication.authorId}
                         title={
                           publication.title === ''
                             ? publication.sourceTitle

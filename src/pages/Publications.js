@@ -136,7 +136,7 @@ export const Publications = () => {
     <Container>
       <Heading>Publications</Heading>
       {isLoading && !publicationsError ? (
-        <div className='centered'>
+        <div className='text-center'>
           <Spinner />
         </div>
       ) : publications ? (

@@ -1,12 +1,22 @@
 import { useReducer, useCallback } from 'react';
 import { db } from '../../firebase/firebase-config';
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  query,
+  where,
+} from 'firebase/firestore';
 import {
   GET_ALL_AUTHORS,
   AUTHORS_ERROR,
   GET_SINGLE_AUTHOR,
   SINGLE_AUTHOR_ERROR,
   RESET_SINGLE_AUTHOR_LOADING,
+  GET_ALL_AUTHOR_PUBLICATIONS,
+  AUTHOR_PUBLICATIONS_ERROR,
+  RESET_SINGLE_AUTHOR_PUBLICATIONS_LOADING,
 } from '../types';
 import AuthorsContext from './authorsContext';
 import authorsReducer from './authorsReducer';
@@ -14,11 +24,14 @@ import authorsReducer from './authorsReducer';
 const AuthorsState = ({ children }) => {
   const initialState = {
     authors: [],
+    authorPublications: [],
     isLoading: true,
     authorsError: null,
     singleAuthor: null,
     isLoadingSingle: true,
     singleAuthorError: null,
+    isLoadingAuthorPublications: true,
+    authorPublicationsError: null,
   };
 
   const [state, dispatch] = useReducer(authorsReducer, initialState);
@@ -80,9 +93,48 @@ const AuthorsState = ({ children }) => {
     [dispatch]
   );
 
+  const getPublicationsByAuthorId = useCallback(
+    async (authorId) => {
+      const pubsRef = collection(db, 'publications');
+      const q = query(pubsRef, where('authorId', '==', authorId));
+
+      try {
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+          dispatch({
+            type: AUTHOR_PUBLICATIONS_ERROR,
+            payload: 'No publications found',
+          });
+        } else {
+          let allPublications = [];
+          querySnapshot.forEach((doc) => {
+            allPublications.push({ ...doc.data(), id: doc.id });
+          });
+
+          dispatch({
+            type: GET_ALL_AUTHOR_PUBLICATIONS,
+            payload: allPublications,
+          });
+        }
+      } catch (error) {
+        dispatch({
+          type: AUTHOR_PUBLICATIONS_ERROR,
+          payload: `Database Error: ${error.message}`,
+        });
+      }
+    },
+    [dispatch]
+  );
+
   const resetSingleAuthorLoading = useCallback(() => {
     dispatch({
       type: RESET_SINGLE_AUTHOR_LOADING,
+    });
+  }, [dispatch]);
+
+  const resetSingleAuthorPublicationsLoading = useCallback(() => {
+    dispatch({
+      type: RESET_SINGLE_AUTHOR_PUBLICATIONS_LOADING,
     });
   }, [dispatch]);
 
@@ -90,14 +142,19 @@ const AuthorsState = ({ children }) => {
     <AuthorsContext.Provider
       value={{
         authors: state.authors,
+        authorPublications: state.authorPublications,
         isLoading: state.isLoading,
         authorsError: state.authorsError,
         singleAuthor: state.singleAuthor,
         isLoadingSingle: state.isLoadingSingle,
         singleAuthorError: state.singleAuthorError,
+        authorPublicationsError: state.authorPublicationsError,
+        isLoadingAuthorPublications: state.isLoadingAuthorPublications,
         getAllAuthors,
         getSingleAuthorById,
         resetSingleAuthorLoading,
+        getPublicationsByAuthorId,
+        resetSingleAuthorPublicationsLoading,
       }}
     >
       {children}

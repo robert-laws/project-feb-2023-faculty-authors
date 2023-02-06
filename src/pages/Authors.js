@@ -10,6 +10,7 @@ export const Authors = () => {
     authorsError,
     getAllAuthors,
     resetSingleAuthorLoading,
+    resetSingleAuthorPublicationsLoading,
   } = useContext(AuthorsContext);
 
   useEffect(() => {
@@ -22,11 +23,15 @@ export const Authors = () => {
     resetSingleAuthorLoading();
   }, [resetSingleAuthorLoading]);
 
+  useEffect(() => {
+    resetSingleAuthorPublicationsLoading();
+  }, [resetSingleAuthorPublicationsLoading]);
+
   return (
     <Container>
       <Heading>Authors</Heading>
       {isLoading && !authorsError ? (
-        <div className='centered'>
+        <div className='text-center'>
           <Spinner />
         </div>
       ) : authors ? (

@@ -31,7 +31,7 @@ export const Authors = () => {
     <Container>
       <Heading>Authors</Heading>
       {isLoading && !authorsError ? (
-        <div className='text-center'>
+        <div className='text-center pt-10'>
           <Spinner />
         </div>
       ) : authors ? (

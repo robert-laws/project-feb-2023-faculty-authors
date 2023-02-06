@@ -42,7 +42,7 @@ export const Publication = () => {
   return (
     <Container>
       {isLoadingSingle && !singlePublicationError ? (
-        <div className='text-center'>
+        <div className='text-center pt-10'>
           <Spinner />
         </div>
       ) : singlePublication ? (

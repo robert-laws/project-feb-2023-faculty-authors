@@ -36,7 +36,7 @@ export const Author = () => {
   return (
     <Container>
       {isLoadingSingle && !singleAuthorError ? (
-        <div className='text-center'>
+        <div className='text-center pt-10'>
           <Spinner />
         </div>
       ) : singleAuthor ? (
@@ -125,7 +125,7 @@ export const Author = () => {
             {isLoadingAuthorPublications &&
             !authorPublicationsError &&
             authorPublications.length === 0 ? (
-              <div className='text-center'>
+              <div className='text-center pt-10'>
                 <Spinner />
               </div>
             ) : authorPublications ? (

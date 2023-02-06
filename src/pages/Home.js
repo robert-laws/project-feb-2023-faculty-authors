@@ -14,7 +14,7 @@ export const Home = () => {
       {/* <DataLoadAuthors /> */}
       <main>
         <div className='relative px-6 lg:px-8'>
-          <div className='mx-auto max-w-2xl py-24 sm:py-32 lg:py-40'>
+          <div className='mx-auto max-w-2xl py-16 sm:py-20 lg:py-24'>
             <div className='hidden sm:mb-8 sm:flex sm:justify-center'>
               <div className='relative rounded-full py-1 px-3 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20'>
                 Comprehensive listing of GUQ Authored publications.{' '}
@@ -32,8 +32,19 @@ export const Home = () => {
                 Georgetown University in Qatar Research Database
               </h1>
               <p className='mt-6 text-lg leading-8 text-gray-600'>
-                Comprehensive listing of authored publications by members of the
-                Georgetown University in Qatar (GUQ) scholarly community.
+                A comprehensive full-text database of publications by members of
+                the Georgetown University in Qatar (GU-Q) scholarly community.
+                The database includes publications by members of the Georgetown
+                University in Qatar (GU-Q) community and those sponsored by the
+                University's Center for International and Regional Studies
+                (CIRS).
+              </p>
+              <p className='mt-6 text-lg leading-8 text-gray-600'>
+                Our faculty members are recognized nationally and
+                internationally as leaders in their fields. Search this database
+                by name, year, concept or keyword to discover researchers,
+                browse and access their publications, and visualize research
+                growth.
               </p>
               <div className='mt-10 flex items-center justify-center gap-x-6'>
                 <Link

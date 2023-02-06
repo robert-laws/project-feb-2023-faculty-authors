@@ -100,11 +100,11 @@ export const UpdatePublication = () => {
 
     updateSinglePublication(editedPublication);
 
-    navigate(`/publication/${id}`);
+    navigate(`/publications/${id}`);
   };
 
   const handleCancel = () => {
-    navigate(`/publication/${id}`);
+    navigate(`/publications/${id}`);
   };
 
   return (
@@ -776,18 +776,18 @@ export const UpdatePublication = () => {
 
                   <div className='sm:col-span-1'>
                     <label
-                      htmlFor='guqAffiliated'
+                      htmlFor='publicationAffiliation'
                       className='block text-sm font-medium text-gray-700'
                     >
                       GUQ Affiliated
                     </label>
                     <div className='mt-1'>
                       <select
-                        id='guqAffiliated'
-                        name='guqAffiliated'
+                        id='publicationAffiliation'
+                        name='publicationAffiliation'
                         className='block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm'
                         onChange={(e) => handleTextChange(e)}
-                        value={editedPublication.guqAffiliated}
+                        value={editedPublication.publicationAffiliation}
                       >
                         <option key='Select' value=''>
                           Select...

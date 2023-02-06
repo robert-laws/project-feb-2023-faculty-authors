@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import PublicationsContext from '../context/publications/publicationsContext';
 import { Container, Heading, Card, Spinner } from '../components';
-import { AddToList } from '../utilities';
+import { AddToList, AddToAndSortList } from '../utilities';
 import ReactPaginate from 'react-paginate';
 
 export const Publications = () => {
@@ -22,17 +22,23 @@ export const Publications = () => {
   const [filtersTouched, setFiltersTouched] = useState(false);
 
   const [filterLists, setFilterLists] = useState({
+    publicationAffiliation: [],
+    publishingGroup: [],
+    cirsSponsored: [],
+    lastName: [],
     documentType: [],
     language: [],
     year: [],
-    cirsSponsored: [],
   });
 
   const [selectedFilters, setSelectedFilters] = useState({
+    publicationAffiliation: [],
+    publishingGroup: [],
+    cirsSponsored: [],
+    lastName: [],
     documentType: [],
     language: [],
     year: [],
-    cirsSponsored: [],
   });
 
   useEffect(() => {
@@ -48,10 +54,16 @@ export const Publications = () => {
   useEffect(() => {
     if (publications.length > 0) {
       setFilterLists({
+        publicationAffiliation: AddToList(
+          publications,
+          'publicationAffiliation'
+        ),
+        publishingGroup: AddToList(publications, 'publishingGroup'),
+        cirsSponsored: AddToList(publications, 'cirsSponsored'),
+        lastName: AddToList(publications, 'lastName'),
         documentType: AddToList(publications, 'documentType'),
         language: AddToList(publications, 'language'),
         year: AddToList(publications, 'year'),
-        cirsSponsored: AddToList(publications, 'cirsSponsored'),
       });
     }
   }, [publications]);
@@ -86,6 +98,22 @@ export const Publications = () => {
 
       if (property === 'year') {
         myList.sort((a, b) => b[0] - a[0]);
+      }
+
+      if (property === 'lastName') {
+        myList.sort((a, b) => {
+          const nameA = a[0].toUpperCase(); // ignore upper and lowercase
+          const nameB = b[0].toUpperCase(); // ignore upper and lowercase
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+
+          // names must be equal
+          return 0;
+        });
       }
 
       allLists.push([property, myList]);

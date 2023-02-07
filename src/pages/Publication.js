@@ -225,7 +225,18 @@ export const Publication = () => {
                   DOI
                 </dt>
                 <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-                  {singlePublication.doi}
+                  {singlePublication.doi ? (
+                    <a
+                      className='text-blue-500 hover:text-blue-800 hover:underline'
+                      rel='noreferrer'
+                      target='_blank'
+                      href={`${singlePublication.doi}`}
+                    >
+                      {singlePublication.doi}
+                    </a>
+                  ) : (
+                    ''
+                  )}
                 </dd>
               </div>
               <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>

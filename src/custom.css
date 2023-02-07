@@ -84,3 +84,12 @@
     transform: rotate(360deg);
   }
 }
+
+/* Hide Show More - Filter Lists */
+.filter-list div.filter-item:nth-child(n + 7) {
+  display: none;
+}
+
+.filter-list-hide {
+  display: none;
+}

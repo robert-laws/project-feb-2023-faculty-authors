@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useRef } from 'react';
 import PublicationsContext from '../context/publications/publicationsContext';
 import { Container, Heading, Card, Spinner } from '../components';
-import { AddToList, AddToAndSortList } from '../utilities';
+import { AddToList } from '../utilities';
 import ReactPaginate from 'react-paginate';
 
 export const Publications = () => {
@@ -17,6 +17,8 @@ export const Publications = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [publicationsPerPage, setPublicationsPerPage] = useState(10);
+
+  const filterListRef = useRef([]);
 
   //TODO: add filtersTouched to context - reset to false upon page change -> to reset display of filters/records
   const [filtersTouched, setFiltersTouched] = useState(false);
@@ -160,6 +162,16 @@ export const Publications = () => {
     setCurrentPage(selected + 1);
   };
 
+  const handleListToggle = (index) => {
+    const list = filterListRef.current[index];
+    list.classList.toggle('filter-list');
+    if (list.querySelectorAll('p')[1].innerHTML === 'Show More') {
+      list.querySelectorAll('p')[1].innerHTML = 'Show Less';
+    } else {
+      list.querySelectorAll('p')[1].innerHTML = 'Show More';
+    }
+  };
+
   return (
     <Container>
       <Heading>Publications</Heading>
@@ -179,20 +191,33 @@ export const Publications = () => {
               <aside className='md:col-span-12 lg:col-span-2 xl:col-span-3 xl:block'>
                 <div className='sticky top-6 space-y-4'>
                   <div className='flex flex-col'>
-                    {getLists(filterLists).map((list, i) => {
+                    {getLists(filterLists).map((list, index) => {
                       return (
-                        <div className='pr-4 pb-4' key={i}>
+                        <div
+                          className='pr-4 pb-4 filter-list'
+                          ref={(ref) => (filterListRef.current[index] = ref)}
+                          key={index}
+                        >
                           <p className='mb-2'>
                             {list[0] === 'documentType'
                               ? 'Document Type'
                               : list[0] === 'cirsSponsored'
                               ? 'CIRS Sponsored'
+                              : list[0] === 'publicationAffiliation'
+                              ? 'Publication Affiliation'
+                              : list[0] === 'publishingGroup'
+                              ? 'Publishing Group'
+                              : list[0] === 'lastName'
+                              ? 'Last Name'
                               : list[0].charAt(0).toUpperCase() +
                                 list[0].slice(1)}
                           </p>
                           {list[1].map((option, i) => {
                             return (
-                              <div className='flex items-start' key={i}>
+                              <div
+                                className='flex items-start filter-item'
+                                key={i}
+                              >
                                 <div className='flex h-5 items-center mb-1'>
                                   <input
                                     type='checkbox'
@@ -221,6 +246,12 @@ export const Publications = () => {
                               </div>
                             );
                           })}
+                          <p
+                            onClick={() => handleListToggle(index)}
+                            className='text-blue-500 hover:underline hover:cursor-pointer filter-list-show'
+                          >
+                            {list[1].length > 5 ? 'Show More' : ''}
+                          </p>
                         </div>
                       );
                     })}

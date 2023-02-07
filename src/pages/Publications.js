@@ -208,43 +208,79 @@ export const Publications = () => {
                               : list[0] === 'publishingGroup'
                               ? 'Publishing Group'
                               : list[0] === 'lastName'
-                              ? 'Last Name'
+                              ? 'Author'
                               : list[0].charAt(0).toUpperCase() +
                                 list[0].slice(1)}
                           </p>
                           {list[1].map((option, i) => {
-                            return (
-                              <div
-                                className='flex items-start filter-item'
-                                key={i}
-                              >
-                                <div className='flex h-5 items-center mb-1'>
-                                  <input
-                                    type='checkbox'
-                                    className='focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded'
-                                    id={option[0]}
-                                    name={option[0]}
-                                    value={option[0]}
-                                    onChange={(e) => {
-                                      setFilters(list[0], e.target.value);
-                                    }}
-                                  ></input>
+                            if (
+                              list[0] === 'cirsSponsored' &&
+                              option[0] !== 'Yes'
+                            ) {
+                              return null;
+                            } else {
+                              return (
+                                <div
+                                  className='flex items-start filter-item'
+                                  key={i}
+                                >
+                                  <div className='flex h-5 items-center mb-1'>
+                                    <input
+                                      type='checkbox'
+                                      className='focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded'
+                                      id={option[0]}
+                                      name={option[0]}
+                                      value={option[0]}
+                                      onChange={(e) => {
+                                        setFilters(list[0], e.target.value);
+                                      }}
+                                    ></input>
+                                  </div>
+                                  <div className='ml-1 text-sm mb-1'>
+                                    <label
+                                      htmlFor={option[0]}
+                                      className='ml-1.5 font-medium text-gray-700'
+                                    >
+                                      {option[0] === ''
+                                        ? 'Not Specified'
+                                        : option[0]}{' '}
+                                      {/* <span className='text-gray-500 font-normal'>
+                                        ({option[1]})
+                                      </span> */}
+                                      {option[0] === 'GUQ' ? (
+                                        <div className='group inline relative'>
+                                          <span className='px-1 py-1'>*</span>
+                                          <span
+                                            className='group-hover:opacity-100 transition-opacity bg-gray-800 px-1 text-sm text-gray-100 rounded-md absolute left-3 
+    -translate-x-1 -translate-y-4 opacity-0 m-4 w-40'
+                                          >
+                                            Publications that were completed
+                                            during the authors' affiliation with
+                                            the University and list GU-Q as the
+                                            affiliation of the author(s).
+                                          </span>
+                                        </div>
+                                      ) : option[0] === 'Non-GUQ' ? (
+                                        <div className='group inline relative'>
+                                          <span className='px-1 py-1'>*</span>
+                                          <span
+                                            className='group-hover:opacity-100 transition-opacity bg-gray-800 px-1 text-sm text-gray-100 rounded-md absolute left-3 
+    -translate-x-1 -translate-y-4 opacity-0 m-4 w-40'
+                                          >
+                                            Publications that were completed
+                                            before joining GU-Q and those that
+                                            do not list GU-Q as the affiliation
+                                            of the author(s).
+                                          </span>
+                                        </div>
+                                      ) : (
+                                        ''
+                                      )}
+                                    </label>
+                                  </div>
                                 </div>
-                                <div className='ml-1 text-sm mb-1'>
-                                  <label
-                                    htmlFor={option[0]}
-                                    className='ml-1.5 font-medium text-gray-700'
-                                  >
-                                    {option[0] === ''
-                                      ? 'Not Specified'
-                                      : option[0]}{' '}
-                                    <span className='text-gray-500 font-normal'>
-                                      ({option[1]})
-                                    </span>
-                                  </label>
-                                </div>
-                              </div>
-                            );
+                              );
+                            }
                           })}
                           <p
                             onClick={() => handleListToggle(index)}

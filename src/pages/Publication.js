@@ -78,7 +78,7 @@ export const Publication = () => {
                 </dt>
                 <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
                   <Link
-                    className='text-blue-500 hover:underline'
+                    className='text-blue-500 hover:text-blue-800 hover:underline'
                     to={`/authors/${singlePublication.authorId}`}
                   >
                     {singlePublication.firstName} {singlePublication.lastName}
@@ -177,6 +177,7 @@ export const Publication = () => {
                 <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
                   {singlePublication.link ? (
                     <a
+                      className='text-blue-500 hover:text-blue-800 hover:underline'
                       rel='noreferrer'
                       target='_blank'
                       href={`${singlePublication.link}`}

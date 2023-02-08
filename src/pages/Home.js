@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from '../components';
-import { DataLoadPublications } from '../utilities';
+// import { DataLoadPublications } from '../utilities';
 // import { DataLoadAuthors } from '../utilities';
 
 export const Home = () => {
@@ -9,7 +9,7 @@ export const Home = () => {
 
   return (
     <Container>
-      <DataLoadPublications />
+      {/* <DataLoadPublications /> */}
       {/* <DataLoadAuthors /> */}
       <main>
         <div className='relative px-6 lg:px-8'>

@@ -56,12 +56,12 @@ export const Publications = () => {
   useEffect(() => {
     if (publications.length > 0) {
       setFilterLists({
-        publicationAffiliation: AddToList(
-          publications,
-          'publicationAffiliation'
-        ),
+        // publicationAffiliation: AddToList(
+        //   publications,
+        //   'publicationAffiliation'
+        // ),
         publishingGroup: AddToList(publications, 'publishingGroup'),
-        cirsSponsored: AddToList(publications, 'cirsSponsored'),
+        // cirsSponsored: AddToList(publications, 'cirsSponsored'),
         lastName: AddToList(publications, 'lastName'),
         documentType: AddToList(publications, 'documentType'),
         language: AddToList(publications, 'language'),

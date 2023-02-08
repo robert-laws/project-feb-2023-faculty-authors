@@ -2,5 +2,5 @@ export { AddToList } from './AddToList';
 export { AddToAndSortList } from './AddToAndSortList';
 
 // load JSON to Firestore
-export { DataLoad } from './DataLoad';
+export { DataLoadPublications } from './DataLoadPublications';
 export { DataLoadAuthors } from './DataLoadAuthors';

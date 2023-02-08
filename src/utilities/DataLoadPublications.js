@@ -3,7 +3,7 @@ import { db } from '../firebase/firebase-config';
 import { addDoc, collection } from 'firebase/firestore';
 import allData from '../data/faculty-data-jan-31-2022.json';
 
-export const DataLoad = () => {
+export const DataLoadPublications = () => {
   const [loading, setLoading] = useState(false);
 
   const loadData = async (dataFields) => {
@@ -65,7 +65,7 @@ export const DataLoad = () => {
 
   return (
     <div>
-      <h2>Data Load</h2>
+      <h2>Data Load - Publications</h2>
       <div className='flex items-center justify-center'>
         <button
           type='button'

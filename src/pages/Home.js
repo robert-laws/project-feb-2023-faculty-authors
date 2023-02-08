@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Container } from '../components';
-// import { DataLoad } from '../utilities';
+// import { DataLoadPublications } from '../utilities';
 // import { DataLoadAuthors } from '../utilities';
 
 export const Home = () => {
@@ -10,7 +9,7 @@ export const Home = () => {
 
   return (
     <Container>
-      {/* <DataLoad /> */}
+      {/* <DataLoadPublications /> */}
       {/* <DataLoadAuthors /> */}
       <main>
         <div className='relative px-6 lg:px-8'>

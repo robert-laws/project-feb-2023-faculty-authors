@@ -206,9 +206,9 @@ export const Publications = () => {
                               : list[0] === 'publicationAffiliation'
                               ? 'Publication Affiliation'
                               : list[0] === 'publishingGroup'
-                              ? 'Publishing Group'
+                              ? 'Author Status'
                               : list[0] === 'lastName'
-                              ? 'Author'
+                              ? 'Name'
                               : list[0].charAt(0).toUpperCase() +
                                 list[0].slice(1)}
                           </p>
@@ -247,7 +247,7 @@ export const Publications = () => {
                                       {/* <span className='text-gray-500 font-normal'>
                                         ({option[1]})
                                       </span> */}
-                                      {option[0] === 'GUQ' ? (
+                                      {/* {option[0] === 'GUQ' ? (
                                         <div className='group inline relative'>
                                           <span className='px-1 py-1'>*</span>
                                           <span
@@ -267,15 +267,12 @@ export const Publications = () => {
                                             className='group-hover:opacity-100 transition-opacity bg-gray-800 px-1 text-sm text-gray-100 rounded-md absolute left-3 
     -translate-x-1 -translate-y-4 opacity-0 m-4 w-40'
                                           >
-                                            Publications that were completed
-                                            before joining GU-Q and those that
-                                            do not list GU-Q as the affiliation
-                                            of the author(s).
+                                            Publications by Non-GUQ members that were sponsored by CIRS.
                                           </span>
                                         </div>
                                       ) : (
                                         ''
-                                      )}
+                                      )} */}
                                     </label>
                                   </div>
                                 </div>

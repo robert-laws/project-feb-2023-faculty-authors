@@ -706,7 +706,7 @@ export const UpdatePublication = () => {
                       htmlFor='eid'
                       className='block text-sm font-medium text-gray-700'
                     >
-                      EID
+                      Scopus EID
                     </label>
                     <div className='mt-1'>
                       <input

@@ -87,7 +87,7 @@ export const Author = () => {
                 </dt>
                 <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
                   {singleAuthor.researchGateUrl && (
-                    <Link to={singleAuthor.researchGateUrl}>
+                    <Link to={singleAuthor.researchGateUrl} target='_blank'>
                       Research Gate Profile
                     </Link>
                   )}
@@ -99,7 +99,10 @@ export const Author = () => {
                 </dt>
                 <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
                   {singleAuthor.threeSixtyProfileUrl && (
-                    <Link to={singleAuthor.threeSixtyProfileUrl}>
+                    <Link
+                      to={singleAuthor.threeSixtyProfileUrl}
+                      target='_blank'
+                    >
                       Georgetown 360 Profile
                     </Link>
                   )}
@@ -111,7 +114,10 @@ export const Author = () => {
                 </dt>
                 <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
                   {singleAuthor.googleScholarProfileUrl && (
-                    <Link to={singleAuthor.googleScholarProfileUrl}>
+                    <Link
+                      to={singleAuthor.googleScholarProfileUrl}
+                      target='_blank'
+                    >
                       Google Scholar Profile
                     </Link>
                   )}

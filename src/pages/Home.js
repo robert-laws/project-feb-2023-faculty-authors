@@ -16,7 +16,7 @@ export const Home = () => {
         <div className='relative px-6 lg:px-8'>
           <div className='mx-auto max-w-2xl py-16 sm:py-20 lg:py-24'>
             <div className='hidden sm:mb-8 sm:flex sm:justify-center'>
-              <div className='relative rounded-full py-1 px-3 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20'>
+              {/* <div className='relative rounded-full py-1 px-3 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20'>
                 Comprehensive listing of GU-Q Authored publications.{' '}
                 <Link
                   to='/publications'
@@ -25,28 +25,25 @@ export const Home = () => {
                   <span className='absolute inset-0' aria-hidden='true' />
                   View All <span aria-hidden='true'>&rarr;</span>
                 </Link>
-              </div>
+              </div> */}
             </div>
             <div className='text-center'>
               <h1 className='text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl'>
                 GU-Q Research
               </h1>
               <p className='mt-6 text-lg leading-8 text-gray-600'>
-                A comprehensive full-text database of publications by members of
-                the Georgetown University in Qatar (GU-Q) scholarly community.
-                The database includes publications by members of the Georgetown
-                University in Qatar (GU-Q) community and those sponsored by the
-                University's Center for International and Regional Studies
-                (CIRS).
+                This is a comprehensive database of publications completed
+                during the authors' affiliation with Georgetown University in
+                Qatar (GUQ).
               </p>
               <p className='mt-6 text-lg leading-8 text-gray-600'>
                 Our faculty members are recognized nationally and
                 internationally as leaders in their fields. Search this database
-                by name, year, concept or keyword to discover researchers,
+                by name, status, year, and keyword to discover researchers,
                 browse and access their publications, and visualize research
-                growth.
+                growth at the University.
               </p>
-              <div className='mt-10 flex items-center justify-center gap-x-6'>
+              {/* <div className='mt-10 flex items-center justify-center gap-x-6'>
                 <Link
                   to='/publications'
                   className='rounded-md bg-blue-600 px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
@@ -59,7 +56,7 @@ export const Home = () => {
                 >
                   Authors
                 </Link>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className='absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]'>

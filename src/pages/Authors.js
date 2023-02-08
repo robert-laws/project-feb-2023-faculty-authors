@@ -49,12 +49,12 @@ export const Authors = () => {
                         to={`/authors/${author.authorId}`}
                         className='hover:text-teal-600'
                       >
-                        {author.firstName} {author.lastName}
+                        {author.lastName}, {author.firstName}
                       </Link>
                     </h3>
-                    <span className='inline-block flex-shrink-0 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800'>
+                    {/* <span className='inline-block flex-shrink-0 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800'>
                       id: {author.authorId}
-                    </span>
+                    </span> */}
                   </div>
                   <p className='mt-1 truncate text-sm text-gray-500'>
                     GUQ Tenure{' '}

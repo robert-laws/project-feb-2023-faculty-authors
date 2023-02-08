@@ -67,15 +67,24 @@ export const Author = () => {
               </div>
               <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
                 <dt className='text-sm font-medium text-gray-900 text-left md:text-left'>
-                  Author Scopus ID
+                  Scopus Profile
                 </dt>
                 <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-                  {singleAuthor.scopusId}
+                  {singleAuthor.scopusId && (
+                    <Link
+                      className='text-blue-500 hover:text-blue-800 hover:underline'
+                      rel='noreferrer'
+                      target='_blank'
+                      to={singleAuthor.scopusId}
+                    >
+                      Scopus Profile
+                    </Link>
+                  )}
                 </dd>
               </div>
               <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
                 <dt className='text-sm font-medium text-gray-900 text-left md:text-left'>
-                  WoS ResearcherID
+                  Web of Science Profile
                 </dt>
                 <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
                   {singleAuthor.woSId}
@@ -87,7 +96,12 @@ export const Author = () => {
                 </dt>
                 <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
                   {singleAuthor.researchGateUrl && (
-                    <Link to={singleAuthor.researchGateUrl} target='_blank'>
+                    <Link
+                      className='text-blue-500 hover:text-blue-800 hover:underline'
+                      rel='noreferrer'
+                      target='_blank'
+                      to={singleAuthor.researchGateUrl}
+                    >
                       Research Gate Profile
                     </Link>
                   )}
@@ -100,8 +114,10 @@ export const Author = () => {
                 <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
                   {singleAuthor.threeSixtyProfileUrl && (
                     <Link
-                      to={singleAuthor.threeSixtyProfileUrl}
+                      className='text-blue-500 hover:text-blue-800 hover:underline'
+                      rel='noreferrer'
                       target='_blank'
+                      to={singleAuthor.threeSixtyProfileUrl}
                     >
                       Georgetown 360 Profile
                     </Link>
@@ -115,8 +131,10 @@ export const Author = () => {
                 <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
                   {singleAuthor.googleScholarProfileUrl && (
                     <Link
-                      to={singleAuthor.googleScholarProfileUrl}
+                      className='text-blue-500 hover:text-blue-800 hover:underline'
+                      rel='noreferrer'
                       target='_blank'
+                      to={singleAuthor.googleScholarProfileUrl}
                     >
                       Google Scholar Profile
                     </Link>

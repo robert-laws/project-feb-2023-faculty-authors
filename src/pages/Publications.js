@@ -208,7 +208,7 @@ export const Publications = () => {
                               : list[0] === 'publishingGroup'
                               ? 'Author Status'
                               : list[0] === 'lastName'
-                              ? 'Name'
+                              ? 'Author Name'
                               : list[0].charAt(0).toUpperCase() +
                                 list[0].slice(1)}
                           </p>
@@ -241,10 +241,11 @@ export const Publications = () => {
                                       htmlFor={option[0]}
                                       className='ml-1.5 font-medium text-gray-700'
                                     >
-                                      {option[0] === ''
+                                      {option[0]}
+                                      {/* {option[0] === ''
                                         ? 'Not Specified'
                                         : option[0]}{' '}
-                                      {/* <span className='text-gray-500 font-normal'>
+                                      <span className='text-gray-500 font-normal'>
                                         ({option[1]})
                                       </span> */}
                                       {/* {option[0] === 'GUQ' ? (

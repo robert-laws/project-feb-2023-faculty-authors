@@ -1,10 +1,17 @@
 /* pagination */
 .pagination {
+  padding: 20px 0;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 30px;
-  gap: 20px;
+  gap: 1px;
+}
+
+@media screen and (min-width: 768px) {
+  .pagination {
+    gap: 20px;
+  }
 }
 
 .pagination .page-number {

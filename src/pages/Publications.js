@@ -192,7 +192,7 @@ export const Publications = () => {
                 <div className='sticky top-[2rem] ml-5 lg:-ml-0.5 h-[calc(100vh-4.5rem)] overflow-y-auto overflow-x-hidden py-2 pl-0.5'>
                   <aside className='w-64 pr-8 xl:w-72 xl:pr-16'>
                     <div className='self-start sticky top-0 space-y-4 overflow-y-auto'>
-                      <div className='flex flex-col'>
+                      <div className='flex flex-col pl-2'>
                         {getLists(filterLists).map((list, index) => {
                           return (
                             <div

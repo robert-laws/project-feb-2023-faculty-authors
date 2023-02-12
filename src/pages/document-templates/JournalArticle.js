@@ -44,7 +44,7 @@ export const JournalArticle = ({
         <dl className='sm:divide-y sm:divide-gray-200'>
           <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
             <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              Author
+              GUQ Author
             </dt>
             <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
               <Link
@@ -55,19 +55,25 @@ export const JournalArticle = ({
               </Link>
             </dd>
           </div>
+          {authors.length > 1 && (
+            <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
+              <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
+                Other Authors
+              </dt>
+              <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
+                {authors.map((author) => {
+                  return author.includes(lastName) ? (
+                    ''
+                  ) : (
+                    <p key={author}>{author}</p>
+                  );
+                })}
+              </dd>
+            </div>
+          )}
           <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
             <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              All Authors
-            </dt>
-            <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-              {authors.map((author) => (
-                <p key={author}>{author}</p>
-              ))}
-            </dd>
-          </div>
-          <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-            <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              Journal Title
+              Journal Name
             </dt>
             <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
               {sourceTitle}

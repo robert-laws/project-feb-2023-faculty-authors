@@ -1,7 +1,7 @@
 import { Heading } from '../../components';
 import { Link } from 'react-router-dom';
 
-export const JournalArticle = ({
+export const Other = ({
   title,
   sourceTitle,
   authorId,
@@ -38,13 +38,13 @@ export const JournalArticle = ({
   return (
     <>
       <div className='mb-4 flex flex-col'>
-        <Heading>{title}</Heading>
+        <Heading>{title ? title : sourceTitle}</Heading>
       </div>
       <div className='border-t border-gray-200 px-4 py-5 sm:p-0'>
         <dl className='sm:divide-y sm:divide-gray-200'>
           <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
             <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              GUQ Author
+              GU-Q Author
             </dt>
             <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
               <Link
@@ -73,14 +73,6 @@ export const JournalArticle = ({
           )}
           <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
             <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              Journal Name
-            </dt>
-            <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-              {sourceTitle}
-            </dd>
-          </div>
-          <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-            <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
               Publication Year
             </dt>
             <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
@@ -89,27 +81,18 @@ export const JournalArticle = ({
           </div>
           <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
             <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              Volume, Issue
+              Document Type
             </dt>
             <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-              {volume ? `volume: ${volume} ` : ''}
-              {issue ? `issue: ${issue}` : ''}
+              {documentType}
             </dd>
           </div>
           <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
             <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              Pages
+              Abstract
             </dt>
             <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-              {pageStart}-{pageEnd}
-            </dd>
-          </div>
-          <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-            <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              ISSN
-            </dt>
-            <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-              {issn}
+              {abstract}
             </dd>
           </div>
           <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
@@ -118,6 +101,14 @@ export const JournalArticle = ({
             </dt>
             <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
               {language}
+            </dd>
+          </div>
+          <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
+            <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
+              Pages
+            </dt>
+            <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
+              {pageStart}-{pageEnd}
             </dd>
           </div>
           <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
@@ -132,7 +123,7 @@ export const JournalArticle = ({
                   target='_blank'
                   href={`${link}`}
                 >
-                  Permalink
+                  Resource Link
                 </a>
               ) : (
                 ''
@@ -141,13 +132,31 @@ export const JournalArticle = ({
           </div>
           <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
             <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              Abstract
+              Volume, Issue
             </dt>
             <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-              {abstract}
+              {volume ? `volume: ${volume} ` : ''}
+              {issue ? `issue: ${issue}` : ''}
             </dd>
           </div>
-
+          <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
+            <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
+              ISSN
+            </dt>
+            <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
+              {issn}
+            </dd>
+          </div>
+          <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
+            <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
+              ISBN
+            </dt>
+            <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
+              {isbn.map((isbn) => (
+                <p key={isbn}>{isbn}</p>
+              ))}
+            </dd>
+          </div>
           <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
             <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
               DOI
@@ -197,20 +206,20 @@ export const JournalArticle = ({
           </div>
           <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
             <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              Document Type
-            </dt>
-            <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-              {documentType}
-            </dd>
-          </div>
-          <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-            <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
               Sustainable Development Goals
             </dt>
             <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
               {sustainableDevelopmentGoals.map((goal) => (
                 <p key={goal}>{goal}</p>
               ))}
+            </dd>
+          </div>
+          <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
+            <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
+              Call Number
+            </dt>
+            <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
+              {callNumber}
             </dd>
           </div>
         </dl>

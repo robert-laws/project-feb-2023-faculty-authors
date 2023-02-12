@@ -6,7 +6,10 @@ import {
   EditedBook,
   JournalArticle,
   BookChapter,
-  Template,
+  Editorial,
+  ConferencePaper,
+  ResearchPaper,
+  Other,
 } from './document-templates';
 import PublicationsContext from '../context/publications/publicationsContext';
 
@@ -56,12 +59,14 @@ export const Publication = () => {
         return <EditedBook {...singlePublication} />;
       case 'Book Chapter':
         return <BookChapter {...singlePublication} />;
-      // case 'Conference Proceeding':
-      //   return <ConferenceProceeding {...singlePublication} />;
-      // case 'Report':
-      //   return <Report {...singlePublication} />;
+      case 'Editorial':
+        return <Editorial {...singlePublication} />;
+      case 'Conference Paper':
+        return <ConferencePaper {...singlePublication} />;
+      case 'Research Paper':
+        return <ResearchPaper {...singlePublication} />;
       default:
-        return <Template {...singlePublication} />;
+        return <Other {...singlePublication} />;
     }
   };
 

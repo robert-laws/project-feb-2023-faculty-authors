@@ -44,7 +44,7 @@ export const AuthoredBook = ({
         <dl className='sm:divide-y sm:divide-gray-200'>
           <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
             <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              Author
+              GU-Q Author / Editor
             </dt>
             <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
               <Link
@@ -55,26 +55,34 @@ export const AuthoredBook = ({
               </Link>
             </dd>
           </div>
-          <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-            <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              All Authors
-            </dt>
-            <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-              {authors.map((author) => (
-                <p key={author}>{author}</p>
-              ))}
-            </dd>
-          </div>
-          <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-            <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              Editors
-            </dt>
-            <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-              {editors.map((editor) => (
-                <p key={editor}>{editor}</p>
-              ))}
-            </dd>
-          </div>
+          {authors.length > 1 && (
+            <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
+              <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
+                Other Authors
+              </dt>
+              <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
+                {authors.map((author) => {
+                  return author.includes(lastName) ? (
+                    ''
+                  ) : (
+                    <p key={author}>{author}</p>
+                  );
+                })}
+              </dd>
+            </div>
+          )}
+          {editors.length > 0 && (
+            <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
+              <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
+                Editors
+              </dt>
+              <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
+                {editors.map((editor) => (
+                  <p key={editor}>{editor}</p>
+                ))}
+              </dd>
+            </div>
+          )}
           <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
             <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
               Publication Year
@@ -88,7 +96,7 @@ export const AuthoredBook = ({
               Pages
             </dt>
             <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-              {pageCount} ({pageStart}-{pageEnd})
+              {pageStart}-{pageEnd}
             </dd>
           </div>
           <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
@@ -144,25 +152,23 @@ export const AuthoredBook = ({
               {language}
             </dd>
           </div>
-          <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-            <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              Permalink
-            </dt>
-            <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-              {link ? (
+          {link && (
+            <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
+              <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
+                Permalink
+              </dt>
+              <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
                 <a
                   className='text-blue-500 hover:text-blue-800 hover:underline'
                   rel='noreferrer'
                   target='_blank'
                   href={`${link}`}
                 >
-                  Resource Link
+                  Permalink
                 </a>
-              ) : (
-                ''
-              )}
-            </dd>
-          </div>
+              </dd>
+            </div>
+          )}
           <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
             <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
               Abstract
@@ -201,66 +207,10 @@ export const AuthoredBook = ({
           </div>
           <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
             <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              Full Text
-            </dt>
-            <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-              {fullText}
-            </dd>
-          </div>
-
-          <div className='relative py-10'>
-            <div
-              className='absolute inset-0 flex items-center'
-              aria-hidden='true'
-            >
-              <div className='w-full border-t border-red-300' />
-            </div>
-            <div className='relative flex justify-center'>
-              <span className='bg-white px-3 text-lg font-medium text-gray-900'>
-                Content Below ... Should it be included?
-              </span>
-            </div>
-          </div>
-
-          <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-            <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              Author Scopus ID
-            </dt>
-            <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-              {authorScopusId}
-            </dd>
-          </div>
-          <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-            <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              WoS ResearcherID
-            </dt>
-            <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-              {authorResearcherId}
-            </dd>
-          </div>
-          <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-            <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
               Document Type
             </dt>
             <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
               {documentType}
-            </dd>
-          </div>
-          <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-            <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              Volume, Issue
-            </dt>
-            <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-              {volume ? `volume: ${volume} ` : ''}
-              {issue ? `issue: ${issue}` : ''}
-            </dd>
-          </div>
-          <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-            <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              ISSN
-            </dt>
-            <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-              {issn}
             </dd>
           </div>
           <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
@@ -271,30 +221,6 @@ export const AuthoredBook = ({
               {sustainableDevelopmentGoals.map((goal) => (
                 <p key={goal}>{goal}</p>
               ))}
-            </dd>
-          </div>
-          <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-            <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              GUQ Affiliated
-            </dt>
-            <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-              {publicationAffiliation}
-            </dd>
-          </div>
-          <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-            <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              CIRS Sponsored
-            </dt>
-            <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-              {cirsSponsored}
-            </dd>
-          </div>
-          <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-            <dt className='text-sm font-medium text-gray-900 text-left md:text-right'>
-              Author Status
-            </dt>
-            <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-              {publishingGroup}
             </dd>
           </div>
         </dl>

@@ -449,7 +449,7 @@ export const UpdatePublication = () => {
                       htmlFor='link'
                       className='block text-sm font-medium text-gray-700'
                     >
-                      Permalink
+                      Permanent Link
                     </label>
                     <div className='mt-1'>
                       <input

@@ -1,6 +1,18 @@
 import { useContext, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Heading, Container, Spinner, Card } from '../components';
+import { useParams } from 'react-router-dom';
+import {
+  Heading,
+  Container,
+  Spinner,
+  PublicationCard,
+  ResearchIcon,
+} from '../components';
+import ScopusIcon from '../images/scopus.png';
+import WebOfScienceIcon from '../images/web-of-science.png';
+import GoogleScholarIcon from '../images/google-scholar.png';
+import GU360Icon from '../images/gu-360.png';
+import ResearchGateIcon from '../images/research-gate.png';
+// import OrcidIcon from '../images/orcid.png';
 import AuthorsContext from '../context/authors/authorsContext';
 
 export const Author = () => {
@@ -44,108 +56,49 @@ export const Author = () => {
           <div className='mb-4 flex flex-col'>
             <Heading>
               {`${singleAuthor.firstName} ${singleAuthor.lastName}`}
+              <span className='ml-2 mr-1'>
+                ({singleAuthor.joinYear} - {singleAuthor.leftYear})
+              </span>
+              {singleAuthor.scopusId && (
+                <ResearchIcon
+                  iconImage={ScopusIcon}
+                  link={singleAuthor.scopusId}
+                  altText='Scopus'
+                />
+              )}
+              {singleAuthor.woSId && (
+                <ResearchIcon
+                  iconImage={WebOfScienceIcon}
+                  link={singleAuthor.woSId}
+                  altText='Web of Science'
+                />
+              )}
+              {singleAuthor.googleScholarProfileUrl && (
+                <ResearchIcon
+                  iconImage={GoogleScholarIcon}
+                  link={singleAuthor.googleScholarProfileUrl}
+                  altText='Google Scholar'
+                />
+              )}
+              {singleAuthor.threeSixtyProfileUrl && (
+                <ResearchIcon
+                  iconImage={GU360Icon}
+                  link={singleAuthor.threeSixtyProfileUrl}
+                  altText='GU 360'
+                />
+              )}
+              {singleAuthor.researchGateUrl && (
+                <ResearchIcon
+                  iconImage={ResearchGateIcon}
+                  link={singleAuthor.researchGateUrl}
+                  altText='Research Gate'
+                />
+              )}
             </Heading>
             <div className='flex justify-end mt-4'>{/* buttons */}</div>
           </div>
-          <div className='border-gray-200 px-4 py-5 sm:p-0'>
-            <dl className='sm:divide-y sm:divide-gray-200'>
-              <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-                <dt className='text-sm font-medium text-gray-900 text-left md:text-left'>
-                  Author ID
-                </dt>
-                <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-                  {singleAuthor.authorId}
-                </dd>
-              </div>
-              <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-                <dt className='text-sm font-medium text-gray-900 text-left md:text-left'>
-                  GUQ Tenure
-                </dt>
-                <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-                  {singleAuthor.joinYear} - {singleAuthor.leftYear}
-                </dd>
-              </div>
-              <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-                <dt className='text-sm font-medium text-gray-900 text-left md:text-left'>
-                  Scopus Profile
-                </dt>
-                <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-                  {singleAuthor.scopusId && (
-                    <Link
-                      className='text-blue-500 hover:text-blue-800 hover:underline'
-                      rel='noreferrer'
-                      target='_blank'
-                      to={singleAuthor.scopusId}
-                    >
-                      Scopus Profile
-                    </Link>
-                  )}
-                </dd>
-              </div>
-              <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-                <dt className='text-sm font-medium text-gray-900 text-left md:text-left'>
-                  Web of Science Profile
-                </dt>
-                <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-                  {singleAuthor.woSId}
-                </dd>
-              </div>
-              <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-                <dt className='text-sm font-medium text-gray-900 text-left md:text-left'>
-                  Research Gate Profile
-                </dt>
-                <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-                  {singleAuthor.researchGateUrl && (
-                    <Link
-                      className='text-blue-500 hover:text-blue-800 hover:underline'
-                      rel='noreferrer'
-                      target='_blank'
-                      to={singleAuthor.researchGateUrl}
-                    >
-                      Research Gate Profile
-                    </Link>
-                  )}
-                </dd>
-              </div>
-              <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-                <dt className='text-sm font-medium text-gray-900 text-left md:text-left'>
-                  Georgetown 360 Profile
-                </dt>
-                <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-                  {singleAuthor.threeSixtyProfileUrl && (
-                    <Link
-                      className='text-blue-500 hover:text-blue-800 hover:underline'
-                      rel='noreferrer'
-                      target='_blank'
-                      to={singleAuthor.threeSixtyProfileUrl}
-                    >
-                      Georgetown 360 Profile
-                    </Link>
-                  )}
-                </dd>
-              </div>
-              <div className='py-4 sm:grid sm:grid-cols-6 sm:gap-4 sm:py-5'>
-                <dt className='text-sm font-medium text-gray-900 text-left md:text-left'>
-                  Google Scholar Profile
-                </dt>
-                <dd className='mt-1 text-sm text-gray-600 sm:col-span-5 sm:mt-0'>
-                  {singleAuthor.googleScholarProfileUrl && (
-                    <Link
-                      className='text-blue-500 hover:text-blue-800 hover:underline'
-                      rel='noreferrer'
-                      target='_blank'
-                      to={singleAuthor.googleScholarProfileUrl}
-                    >
-                      Google Scholar Profile
-                    </Link>
-                  )}
-                </dd>
-              </div>
-            </dl>
-          </div>
 
-          <div className='mb-4 mt-4 pt-8 border-t border-gray-200 flex flex-col'>
-            <h2 className='text-2xl'>Author Publications</h2>
+          <div className='mb-4 mt-4 pt-2 border-t border-gray-200 flex flex-col'>
             {isLoadingAuthorPublications &&
             !authorPublicationsError &&
             authorPublications.length === 0 ? (
@@ -162,7 +115,7 @@ export const Author = () => {
                 <section className='md:col-span-12 lg:col-span-10 xl:col-span-9'>
                   <div className='grid grid-cols-1 gap-4 sm:grid-cols-1'>
                     {authorPublications.map((publication) => (
-                      <Card
+                      <PublicationCard
                         key={publication.pubId}
                         docId={publication.id}
                         authorId={publication.authorId}

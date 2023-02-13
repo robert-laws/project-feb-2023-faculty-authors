@@ -4,7 +4,7 @@ import {
   Home,
   Publications,
   Publication,
-  About,
+  AnnualReports,
   Contact,
   Authors,
   Author,
@@ -23,7 +23,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/publications' element={<Publications />} />
           <Route path='/publications/:id' element={<Publication />} />
-          <Route path='/about' element={<About />} />
+          <Route path='/annual-reports' element={<AnnualReports />} />
           <Route path='/contact' element={<Contact />} />
 
           <Route path='/authors' element={<Authors />} />

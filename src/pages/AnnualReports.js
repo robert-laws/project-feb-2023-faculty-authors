@@ -1,10 +1,10 @@
 import React from 'react';
 import { Heading, Container } from '../components';
 
-export const About = () => {
+export const AnnualReports = () => {
   return (
     <Container>
-      <Heading>About</Heading>
+      <Heading>Annual Reports</Heading>
     </Container>
   );
 };

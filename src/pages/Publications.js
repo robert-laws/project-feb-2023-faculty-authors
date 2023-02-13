@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState, useRef } from 'react';
 import PublicationsContext from '../context/publications/publicationsContext';
-import { Container, Heading, Card, Spinner } from '../components';
+import { Container, Heading, PublicationCard, Spinner } from '../components';
 import { AddToList } from '../utilities';
 import ReactPaginate from 'react-paginate';
 
@@ -304,7 +304,7 @@ export const Publications = () => {
                     {filteredPublications ? (
                       filteredPublications.length > 0 ? (
                         currentPublications.map((publication) => (
-                          <Card
+                          <PublicationCard
                             key={publication.pubId}
                             docId={publication.id}
                             authorId={publication.authorId}
@@ -313,6 +313,7 @@ export const Publications = () => {
                                 ? publication.sourceTitle
                                 : publication.title
                             }
+                            sourceTitle={publication.sourceTitle}
                             author={`${publication.firstName} ${publication.lastName}`}
                             year={publication.year}
                             language={
@@ -321,6 +322,8 @@ export const Publications = () => {
                                 : publication.language
                             }
                             documentType={publication.documentType}
+                            doi={publication.doi}
+                            link={publication.link}
                           />
                         ))
                       ) : (

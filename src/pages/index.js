@@ -1,6 +1,6 @@
 // Public Pages
 export { Home } from './Home';
-export { About } from './About';
+export { AnnualReports } from './AnnualReports';
 export { Contact } from './Contact';
 export { Publications } from './Publications';
 export { Publication } from './Publication';

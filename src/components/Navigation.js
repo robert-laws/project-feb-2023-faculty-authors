@@ -7,7 +7,7 @@ export const Navigation = () => {
     { name: 'Home', href: '/' },
     { name: 'Publications', href: '/publications' },
     { name: 'Authors', href: '/authors' },
-    { name: 'About', href: '/about' },
+    { name: 'Annual Reports', href: '/annual-reports' },
     { name: 'Contact', href: '/contact' },
     { name: 'New', href: '/admin/new' },
   ];

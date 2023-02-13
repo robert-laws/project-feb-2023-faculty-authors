@@ -20,6 +20,7 @@ import {
 } from '../types';
 import AuthorsContext from './authorsContext';
 import authorsReducer from './authorsReducer';
+import { SortText } from '../../utilities';
 
 const AuthorsState = ({ children }) => {
   const initialState = {
@@ -54,7 +55,7 @@ const AuthorsState = ({ children }) => {
 
         dispatch({
           type: GET_ALL_AUTHORS,
-          payload: allAuthors,
+          payload: SortText(allAuthors),
         });
       }
     } catch (error) {

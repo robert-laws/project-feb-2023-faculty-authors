@@ -14,16 +14,16 @@ export const PublicationCard = ({
   link,
 }) => {
   return (
-    <div className='relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-cyan-600 hover:bg-cyan-50'>
+    <div className='relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-blue-600 hover:bg-cyan-50'>
       <div className='flex-shrink-0'>{/* Future Checkbox */}</div>
       <div>
         <dl className=''>
           <div className=''>
             <dt className='text-lg'>
-              <span className='block hover:underline text-blue-700 font-bold'>
+              <span className='block hover:underline text-blue-700 font-medium'>
                 <Link to={`/publications/${docId}`}>{title}</Link>
               </span>
-              <span className='block hover:underline text-blue-700 font-medium'>
+              <span className='block hover:underline text-blue-700 font-normal'>
                 <Link to={`/authors/${authorId}`}>{author}</Link>
               </span>
               {documentType !== 'Authored Book' && (

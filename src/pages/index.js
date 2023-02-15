@@ -10,3 +10,6 @@ export { Author } from './Author';
 
 // 404
 export { NotFound } from './NotFound';
+
+// Search
+export { Search } from './Search';

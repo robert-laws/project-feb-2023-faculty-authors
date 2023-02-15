@@ -245,13 +245,14 @@ export const Publications = () => {
                                           htmlFor={option[0]}
                                           className='ml-1.5 font-medium text-gray-700'
                                         >
-                                          {option[0]}
+                                          {option[0]}{' '}
+                                          <span className='text-gray-500 font-normal'>
+                                            ({option[1]})
+                                          </span>
                                           {/* {option[0] === ''
                                             ? 'Not Specified'
                                             : option[0]}{' '}
-                                          <span className='text-gray-500 font-normal'>
-                                            ({option[1]})
-                                          </span> */}
+                                                                                    */}
                                           {/* {option[0] === 'GUQ' ? (
                                             <div className='group inline relative'>
                                               <span className='px-1 py-1'>*</span>

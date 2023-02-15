@@ -8,6 +8,7 @@ import {
   Contact,
   Authors,
   Author,
+  Search,
   NotFound,
 } from './pages';
 
@@ -28,6 +29,9 @@ function App() {
 
           <Route path='/authors' element={<Authors />} />
           <Route path='/authors/:id' element={<Author />} />
+
+          {/* Search */}
+          <Route path='/search' element={<Search />} />
 
           {/* Private Routes */}
           <Route path='/admin/new' element={<CreatePublication />} />

@@ -13,7 +13,7 @@ export const Home = () => {
       {/* <DataLoadAuthors /> */}
       <main>
         <div className='relative px-6 lg:px-8'>
-          <div className='mx-auto max-w-2xl py-16 sm:py-20 lg:py-24'>
+          <div className='mx-auto max-w-4xl py-16 sm:py-20 lg:py-24'>
             <div className='hidden sm:mb-8 sm:flex sm:justify-center'>
               {/* <div className='relative rounded-full py-1 px-3 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20'>
                 Comprehensive listing of GU-Q Authored publications.{' '}
@@ -30,17 +30,17 @@ export const Home = () => {
               <h1 className='text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl'>
                 GU-Q Research
               </h1>
-              <p className='mt-6 text-lg leading-8 text-gray-600'>
+              <p className='mt-6 text-lg leading-8 text-gray-600 text-justify'>
                 This is a comprehensive database of publications completed
                 during the authors' affiliation with Georgetown University in
-                Qatar (GUQ).
-              </p>
-              <p className='mt-6 text-lg leading-8 text-gray-600'>
-                Our faculty members are recognized nationally and
-                internationally as leaders in their fields. Search this database
-                by name, status, year, and keyword to discover researchers,
-                browse and access their publications, and visualize research
-                growth at the University.
+                Qatar (GUQ). It includes: (1) publications that name GUQ as an
+                author affiliation; (2) works published during an author's
+                tenure at GUQ and name Georgetown University rather than GUQ as
+                the author's affiliation; and (3) works published during an
+                author's tenure at GUQ and the author did not name as their
+                affiliation institutions other than GU and GUQ. Please search
+                the database to discover researchers, browse and access their
+                publications, and visualize research growth at GUQ.
               </p>
               {/* <div className='mt-10 flex items-center justify-center gap-x-6'>
                 <Link

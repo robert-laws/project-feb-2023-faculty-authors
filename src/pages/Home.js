@@ -1,4 +1,6 @@
-import React from 'react';
+import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import PublicationsContext from '../context/publications/publicationsContext';
 import { Container } from '../components';
 // import { DataLoadPublications } from '../utilities';
 // import { DataLoadAuthors } from '../utilities';
@@ -6,6 +8,22 @@ import { Container } from '../components';
 export const Home = () => {
   // TODO: Add full-text search feature
   // TODO: Add home page content - hero image, search bar, etc.
+
+  const navigate = useNavigate();
+
+  const { saveSearchQuery } = useContext(PublicationsContext);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // const results = searchWithFuse(searchQuery);
+    // setSearchResults(results);
+    if (searchQuery.length > 0) {
+      saveSearchQuery(searchQuery);
+      navigate('/publications');
+    }
+  };
 
   return (
     <Container>
@@ -30,6 +48,29 @@ export const Home = () => {
               <h1 className='text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl'>
                 GU-Q Research
               </h1>
+              <div className='flex justify-center'>
+                <form
+                  className='mt-20 mb-3 w-full lg:w-full flex'
+                  onSubmit={handleSubmit}
+                >
+                  <input
+                    type='search'
+                    className='min-w-0 flex-1 form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none placeholder-gray-300'
+                    id='searchQuery'
+                    placeholder='Enter search'
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                  <div className='mt-4 sm:mt-0 sm:ml-3'>
+                    <button
+                      type='submit'
+                      className='block w-full rounded-md border border-transparent bg-rose-500 px-5 py-3 text-base font-medium text-white shadow hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:px-10'
+                    >
+                      Search
+                    </button>
+                  </div>
+                </form>
+              </div>
               <p className='mt-6 text-lg leading-8 text-gray-600 text-justify'>
                 This is a comprehensive database of publications completed
                 during the authors' affiliation with Georgetown University in

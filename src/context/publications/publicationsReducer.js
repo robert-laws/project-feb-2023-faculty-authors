@@ -8,6 +8,7 @@ import {
   CREATE_SINGLE_PUBLICATION,
   UPDATE_SINGLE_PUBLICATION,
   DELETE_SINGLE_PUBLICATION,
+  SEARCH_QUERY,
 } from '../types';
 
 const publicationsReducer = (state, action) => {
@@ -87,6 +88,12 @@ const publicationsReducer = (state, action) => {
         filteredPublications: state.publications.filter(
           (publication) => publication.id !== action.payload
         ),
+      };
+
+    case SEARCH_QUERY:
+      return {
+        ...state,
+        searchQuery: action.payload,
       };
 
     default:

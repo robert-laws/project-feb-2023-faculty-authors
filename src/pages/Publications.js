@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState, useRef } from 'react';
+import Fuse from 'fuse.js';
 import PublicationsContext from '../context/publications/publicationsContext';
 import { Container, Heading, PublicationCard, Spinner } from '../components';
 import { AddToList } from '../utilities';
@@ -13,6 +14,7 @@ export const Publications = () => {
     getAllPublications,
     filterPublications,
     resetSinglePublicationLoading,
+    searchQuery,
   } = useContext(PublicationsContext);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,11 +45,39 @@ export const Publications = () => {
     year: [],
   });
 
+  const options = {
+    includeScore: true,
+    keys: [
+      { name: 'title', weight: 0.2 },
+      { name: 'sourceTitle', weight: 0.2 },
+      { name: 'abstract', weight: 0.25 },
+      { name: 'lastName', weight: 0.2 },
+      { name: 'firstName', weight: 0.2 },
+    ],
+    useExtendedSearch: true,
+    threshold: 0.25,
+  };
+
+  const fuse = new Fuse(publications, options);
+
   useEffect(() => {
     if (publications.length === 0) {
       getAllPublications();
     }
   }, [publications, getAllPublications]);
+
+  const { saveSearchQuery } = useContext(PublicationsContext);
+  const [searchQueryPublications, setSearchQueryPublications] = useState(
+    searchQuery || ''
+  );
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (searchQueryPublications.length > 0) {
+      saveSearchQuery(searchQueryPublications);
+    }
+  };
 
   useEffect(() => {
     resetSinglePublicationLoading();
@@ -69,6 +99,19 @@ export const Publications = () => {
       });
     }
   }, [publications]);
+
+  useEffect(() => {
+    const searchWithFuse = (query) => {
+      if (query.length === 0) return [];
+      const results = fuse.search(query).map((result) => result.item);
+      return results;
+    };
+
+    if (searchQuery && publications.length > 0) {
+      const results = searchWithFuse(searchQuery);
+      filterPublications(results);
+    }
+  }, [searchQuery, publications, filterPublications]);
 
   const setFilters = (list, filter) => {
     setFiltersTouched(true);
@@ -192,6 +235,31 @@ export const Publications = () => {
                 <div className='sticky top-[2rem] ml-5 lg:-ml-0.5 h-[calc(100vh-4.5rem)] overflow-y-auto overflow-x-hidden py-2 pl-0.5'>
                   <aside className='w-64 pr-8 xl:w-72 xl:pr-16'>
                     <div className='self-start sticky top-0 space-y-4 overflow-y-auto'>
+                      <div className='flex justify-center'>
+                        <form
+                          className='mb-2 w-full lg:w-full flex flex-col space-y-2'
+                          onSubmit={handleSubmit}
+                        >
+                          <input
+                            type='search'
+                            className='min-w-0 flex-1 form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none placeholder-gray-300'
+                            id='searchQuery'
+                            placeholder='Enter search'
+                            value={searchQueryPublications}
+                            onChange={(e) =>
+                              setSearchQueryPublications(e.target.value)
+                            }
+                          />
+                          <div className='sm:mt-0'>
+                            <button
+                              type='submit'
+                              className='block w-full rounded-md border border-transparent bg-rose-500 px-2 py-2 text-base font-medium text-white shadow hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-0 sm:px-10'
+                            >
+                              Search
+                            </button>
+                          </div>
+                        </form>
+                      </div>
                       <div className='flex flex-col pl-2'>
                         {getLists(filterLists).map((list, index) => {
                           return (

@@ -1,10 +1,14 @@
 import { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Fuse from 'fuse.js';
 import PublicationsContext from '../context/publications/publicationsContext';
 import { Container, Heading } from '../components';
 
 export const Search = () => {
-  const { publications, getAllPublications } = useContext(PublicationsContext);
+  const navigate = useNavigate();
+
+  const { publications, getAllPublications, filterPublications } =
+    useContext(PublicationsContext);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
@@ -42,7 +46,15 @@ export const Search = () => {
 
     const results = searchWithFuse(searchQuery);
     setSearchResults(results);
+
+    navigate('/publications');
   };
+
+  useEffect(() => {
+    if (searchResults.length > 0) {
+      filterPublications(searchResults);
+    }
+  }, [searchResults, filterPublications]);
 
   return (
     <Container>

@@ -15,6 +15,7 @@ export const Publications = () => {
     filterPublications,
     resetSinglePublicationLoading,
     searchQuery,
+    saveSearchQuery,
   } = useContext(PublicationsContext);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -66,7 +67,6 @@ export const Publications = () => {
     }
   }, [publications, getAllPublications]);
 
-  const { saveSearchQuery } = useContext(PublicationsContext);
   const [searchQueryPublications, setSearchQueryPublications] = useState(
     searchQuery || ''
   );
@@ -215,6 +215,32 @@ export const Publications = () => {
     }
   };
 
+  const handleResetClick = () => {
+    setFiltersTouched(false);
+    setSelectedFilters({
+      publishingGroup: [],
+      lastName: [],
+      documentType: [],
+      language: [],
+      year: [],
+    });
+
+    setCurrentPage(1);
+    filterPublications(publications);
+    saveSearchQuery('');
+    setSearchQueryPublications('');
+
+    if (filterListRef.current.length > 0) {
+      filterListRef.current.forEach((list) => {
+        if (list) {
+          list.querySelectorAll('input').forEach((input) => {
+            input.checked = false;
+          });
+        }
+      });
+    }
+  };
+
   return (
     <Container>
       <Heading>Publications</Heading>
@@ -253,12 +279,21 @@ export const Publications = () => {
                           <div className='sm:mt-0'>
                             <button
                               type='submit'
-                              className='block w-full rounded-md border border-transparent bg-rose-500 px-2 py-2 text-base font-medium text-white shadow hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-0 sm:px-10'
+                              className='block w-full rounded-md border border-transparent bg-blue-500 px-2 py-2 text-base font-medium text-white shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 sm:px-10'
                             >
                               Search
                             </button>
                           </div>
                         </form>
+                      </div>
+                      <div className='sm:mt-0'>
+                        <button
+                          onClick={handleResetClick}
+                          type='button'
+                          className='block w-full rounded-md border border-transparent bg-rose-500 px-2 py-2 text-base font-medium text-white shadow hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-0 sm:px-10'
+                        >
+                          Reset All
+                        </button>
                       </div>
                       <div className='flex flex-col pl-2'>
                         {getLists(filterLists).map((list, index) => {

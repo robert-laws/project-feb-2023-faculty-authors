@@ -27,23 +27,19 @@ export const Publications = () => {
   const [filtersTouched, setFiltersTouched] = useState(false);
 
   const [filterLists, setFilterLists] = useState({
-    publicationAffiliation: [],
     publishingGroup: [],
-    cirsSponsored: [],
+    year: [],
     lastName: [],
     documentType: [],
     language: [],
-    year: [],
   });
 
   const [selectedFilters, setSelectedFilters] = useState({
-    publicationAffiliation: [],
     publishingGroup: [],
-    cirsSponsored: [],
+    year: [],
     lastName: [],
     documentType: [],
     language: [],
-    year: [],
   });
 
   const options = {
@@ -92,10 +88,10 @@ export const Publications = () => {
         // ),
         publishingGroup: AddToList(publications, 'publishingGroup'),
         // cirsSponsored: AddToList(publications, 'cirsSponsored'),
+        year: AddToList(publications, 'year'),
         lastName: AddToList(publications, 'lastName'),
         documentType: AddToList(publications, 'documentType'),
         language: AddToList(publications, 'language'),
-        year: AddToList(publications, 'year'),
       });
     }
   }, [publications]);
@@ -219,10 +215,10 @@ export const Publications = () => {
     setFiltersTouched(false);
     setSelectedFilters({
       publishingGroup: [],
+      year: [],
       lastName: [],
       documentType: [],
       language: [],
-      year: [],
     });
 
     setCurrentPage(1);
@@ -259,7 +255,7 @@ export const Publications = () => {
             <div className='relative mx-auto flex flex-col max-w-8xl justify-center sm:px-2 lg:flex-row lg:px-2 xl:px-4'>
               <div className='flex-auto lg:relative lg:block lg:flex-none mb-6 lg:mb-0'>
                 <div className='sticky top-[2rem] ml-5 lg:-ml-0.5 h-[calc(100vh-4.5rem)] overflow-y-auto overflow-x-hidden py-2 pl-0.5'>
-                  <aside className='w-64 pr-8 xl:w-72 xl:pr-16'>
+                  <aside className='w-64 pr-2 xl:w-72 xl:pr-4'>
                     <div className='self-start sticky top-0 space-y-4 overflow-y-auto'>
                       <div className='flex justify-center'>
                         <form

@@ -131,6 +131,7 @@ export const Author = () => {
                             ? publication.sourceTitle
                             : publication.title
                         }
+                        sourceTitle={publication.sourceTitle}
                         author={`${publication.firstName} ${publication.lastName}`}
                         year={publication.year}
                         language={
@@ -139,6 +140,8 @@ export const Author = () => {
                             : publication.language
                         }
                         documentType={publication.documentType}
+                        doi={publication.doi}
+                        link={publication.link}
                       />
                     ))}
                   </div>

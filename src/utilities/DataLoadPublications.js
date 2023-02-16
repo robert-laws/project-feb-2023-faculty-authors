@@ -43,7 +43,6 @@ export const DataLoadPublications = () => {
       publicationAffiliation: dataFields.publicationAffiliation,
       cirsSponsored: dataFields.cirsSponsored,
       publishingGroup: dataFields.publishingGroup,
-      fullText: dataFields.fullText,
     });
   };
 

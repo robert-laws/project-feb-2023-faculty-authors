@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import PublicationsContext from '../context/publications/publicationsContext';
 import { Container } from '../components';
 // import { DataLoadPublications } from '../utilities';
-// import { DataLoadAuthors } from '../utilities';
+import { DataLoadAuthors } from '../utilities';
 
 export const Home = () => {
   // TODO: Add full-text search feature
@@ -17,8 +17,6 @@ export const Home = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // const results = searchWithFuse(searchQuery);
-    // setSearchResults(results);
     if (searchQuery.length > 0) {
       saveSearchQuery(searchQuery);
       navigate('/publications');
@@ -28,22 +26,10 @@ export const Home = () => {
   return (
     <Container>
       {/* <DataLoadPublications /> */}
-      {/* <DataLoadAuthors /> */}
+      <DataLoadAuthors />
       <main>
         <div className='relative px-6 lg:px-8'>
           <div className='mx-auto max-w-4xl py-16 sm:py-20 lg:py-24'>
-            <div className='hidden sm:mb-8 sm:flex sm:justify-center'>
-              {/* <div className='relative rounded-full py-1 px-3 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20'>
-                Comprehensive listing of GU-Q Authored publications.{' '}
-                <Link
-                  to='/publications'
-                  className='font-semibold text-blue-600'
-                >
-                  <span className='absolute inset-0' aria-hidden='true' />
-                  View All <span aria-hidden='true'>&rarr;</span>
-                </Link>
-              </div> */}
-            </div>
             <div className='text-center'>
               <h1 className='text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl'>
                 GU-Q Research
@@ -83,20 +69,6 @@ export const Home = () => {
                 the database to discover researchers, browse and access their
                 publications, and visualize research growth at GUQ.
               </p>
-              {/* <div className='mt-10 flex items-center justify-center gap-x-6'>
-                <Link
-                  to='/publications'
-                  className='rounded-md bg-blue-600 px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
-                >
-                  Publications
-                </Link>
-                <Link
-                  to='/authors'
-                  className='rounded-md bg-teal-600 px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
-                >
-                  Authors
-                </Link>
-              </div> */}
             </div>
           </div>
           <div className='absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]'>

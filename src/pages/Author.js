@@ -12,7 +12,7 @@ import WebOfScienceIcon from '../images/web-of-science.png';
 import GoogleScholarIcon from '../images/google-scholar.png';
 import GU360Icon from '../images/gu-360.png';
 import ResearchGateIcon from '../images/research-gate.png';
-// import OrcidIcon from '../images/orcid.png';
+import OrcidIcon from '../images/orcid.png';
 import AuthorsContext from '../context/authors/authorsContext';
 
 export const Author = () => {
@@ -85,6 +85,13 @@ export const Author = () => {
                   iconImage={GU360Icon}
                   link={singleAuthor.threeSixtyProfileUrl}
                   altText='GU 360'
+                />
+              )}
+              {singleAuthor.orcidId && (
+                <ResearchIcon
+                  iconImage={OrcidIcon}
+                  link={singleAuthor.orcidId}
+                  altText='Orcid'
                 />
               )}
               {singleAuthor.researchGateUrl && (

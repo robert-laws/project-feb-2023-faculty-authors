@@ -5,7 +5,7 @@ import WebOfScienceIcon from '../images/web-of-science.png';
 import GoogleScholarIcon from '../images/google-scholar.png';
 import GU360Icon from '../images/gu-360.png';
 import ResearchGateIcon from '../images/research-gate.png';
-// import OrcidIcon from '../images/orcid.png';
+import OrcidIcon from '../images/orcid.png';
 
 export const AuthorCard = ({
   id,
@@ -16,6 +16,7 @@ export const AuthorCard = ({
   leftYear,
   scopusId,
   woSId,
+  orcidId,
   researchGateUrl,
   threeSixtyProfileUrl,
   googleScholarProfileUrl,
@@ -71,6 +72,13 @@ export const AuthorCard = ({
                 link={threeSixtyProfileUrl}
                 altText='GU 360'
                 location='card'
+              />
+            )}
+            {orcidId && (
+              <ResearchIcon
+                iconImage={OrcidIcon}
+                link={orcidId}
+                altText='Orcid'
               />
             )}
             {researchGateUrl && (

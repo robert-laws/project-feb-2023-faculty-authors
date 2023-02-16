@@ -16,6 +16,7 @@ export const DataLoadAuthors = () => {
       scopusId: dataFields.scopusId,
       woSId: dataFields.woSId,
       researchGateUrl: dataFields.researchGateUrl,
+      orcidId: dataFields.orcidId,
       threeSixtyProfileUrl: dataFields.threeSixtyProfileUrl,
       googleScholarProfileUrl: dataFields.googleScholarProfileUrl,
       joinYear: dataFields.joinYear,

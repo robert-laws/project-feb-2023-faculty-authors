@@ -79,6 +79,7 @@ export const AuthorCard = ({
                 iconImage={OrcidIcon}
                 link={orcidId}
                 altText='Orcid'
+                location='card'
               />
             )}
             {researchGateUrl && (

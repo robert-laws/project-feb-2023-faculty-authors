@@ -2,8 +2,8 @@ import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PublicationsContext from '../context/publications/publicationsContext';
 import { Container } from '../components';
-import { DataLoadPublications } from '../utilities';
-import { DataLoadAuthors } from '../utilities';
+// import { DataLoadPublications } from '../utilities';
+// import { DataLoadAuthors } from '../utilities';
 
 export const Home = () => {
   // TODO: Add full-text search feature
@@ -25,8 +25,8 @@ export const Home = () => {
 
   return (
     <Container>
-      <DataLoadPublications />
-      <DataLoadAuthors />
+      {/* <DataLoadPublications /> */}
+      {/* <DataLoadAuthors /> */}
       <main>
         <div className='relative px-6 lg:px-8'>
           <div className='mx-auto max-w-4xl py-16 sm:py-20 lg:py-24'>

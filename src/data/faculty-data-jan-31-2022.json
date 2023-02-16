@@ -11830,58 +11830,6 @@
     "publishingGroup": "Student"
   },
   {
-    "pubId": 1313,
-    "authorId": 1046,
-    "authorScopusId": "",
-    "authorResearcherId": "",
-    "lastName": "Jackson",
-    "firstName": "Maurice",
-    "authors": [""],
-    "title": "",
-    "year": "2018",
-    "sourceTitle": "DC jazz : stories of jazz music in Washington, DC /",
-    "volume": "",
-    "issue": "",
-    "pageStart": "",
-    "pageEnd": "",
-    "pageCount": "",
-    "doi": "",
-    "link": "",
-    "abstract": "",
-    "bookReview": "",
-    "authorKeywords": [],
-    "indexKeywords": [
-      "Jazz--Washington (D.C.)--History and criticism.",
-      "Jazz musicians--Washington (D.C.).",
-      "Jazz.",
-      "Jazz musicians.",
-      "Washington (D.C.)",
-      "Criticism, interpretation, etc."
-    ],
-    "editors": [
-      "Ruble, Blair A., 1949- editor.",
-      "Jackson, Maurice, 1950- editor."
-    ],
-    "publisher": "Georgetown University Press",
-    "issn": "",
-    "isbn": [
-      "26165890",
-      "9781626165892",
-      "1626165904",
-      "9781626165908",
-      "9781626165915",
-      "1626165912"
-    ],
-    "language": "English",
-    "documentType": "Edited Book",
-    "eid": "",
-    "sustainableDevelopmentGoals": [],
-    "callNumber": "ML3508.8.W27 D3 2018",
-    "publicationAffiliation": "GUQ",
-    "cirsSponsored": "",
-    "publishingGroup": "Faculty"
-  },
-  {
     "pubId": 1314,
     "authorId": 1047,
     "authorScopusId": "https://www.scopus.com/authid/detail.uri?authorId=57189233364",

@@ -27,7 +27,8 @@ export const Footer = () => {
           ))}
         </nav>
         <p className='mt-10 text-center text-xs leading-5 text-white'>
-          &copy; 2023 Georgetown University in Qatar, Inc. All rights reserved.
+          &copy; 2023 Georgetown University in Qatar Library, Inc. All rights
+          reserved.
         </p>
       </div>
     </footer>

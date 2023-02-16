@@ -246,11 +246,6 @@ export const Publications = () => {
         </div>
       ) : publications ? (
         <>
-          <div className='mt-1'>
-            <span className='font-bold text-lg'>
-              {filteredPublications.length} publications
-            </span>
-          </div>
           <div className='py-6'>
             <div className='relative mx-auto flex flex-col max-w-8xl justify-center sm:px-2 lg:flex-row lg:px-2 xl:px-4'>
               <div className='flex-auto lg:relative lg:block lg:flex-none mb-6 lg:mb-0'>
@@ -400,6 +395,11 @@ export const Publications = () => {
               </div>
               <div className='min-w-0 max-w-3xl flex-auto px-4 py-2 lg:max-w-6xl lg:pr-0 lg:pl-8 xl:px-10'>
                 <main className=''>
+                  <div className='mb-2 -mt-2'>
+                    <span className='font-bold text-lg'>
+                      {filteredPublications.length} Results
+                    </span>
+                  </div>
                   <div className=' space-y-4'>
                     {filteredPublications ? (
                       filteredPublications.length > 0 ? (

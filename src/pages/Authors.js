@@ -28,7 +28,10 @@ export const Authors = () => {
 
   return (
     <Container>
-      <Heading>Authors</Heading>
+      <Heading>
+        Authors{' '}
+        <span className='font-normal text-base ml-3'>(GUQ tenure years)</span>
+      </Heading>
       {isLoading && !authorsError ? (
         <div className='text-center pt-10'>
           <Spinner />

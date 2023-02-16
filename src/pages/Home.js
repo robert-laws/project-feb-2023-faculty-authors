@@ -58,16 +58,16 @@ export const Home = () => {
                 </form>
               </div>
               <p className='mt-6 text-lg leading-8 text-gray-600 text-justify'>
-                This is a comprehensive database of publications completed
-                during the authors' affiliation with Georgetown University in
-                Qatar (GUQ). It includes: (1) publications that name GUQ as an
-                author affiliation; (2) works published during an author's
-                tenure at GUQ and name Georgetown University rather than GUQ as
-                the author's affiliation; and (3) works published during an
-                author's tenure at GUQ and the author did not name as their
-                affiliation institutions other than GU and GUQ. Please search
-                the database to discover researchers, browse and access their
-                publications, and visualize research growth at GUQ.
+                This is a comprehensive database of publications completed by
+                Georgetown University in Qatar (GUQ) members. It includes
+                publications that list GUQ as an author's affiliation and works
+                published during an author's tenure at GUQ (from the year
+                following appointment on). The database does not include works
+                published before joining GUQ and works where the author lists
+                institutions other than GUQ or Georgetown University as their
+                affiliation. Please search the database to discover researchers,
+                browse and access publications and author profiles, and
+                visualize GUQ's research output and impact.
               </p>
             </div>
           </div>

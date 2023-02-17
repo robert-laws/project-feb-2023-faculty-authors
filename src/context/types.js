@@ -26,3 +26,8 @@ export const RESET_SINGLE_AUTHOR_PUBLICATIONS_LOADING =
 
 // Search
 export const SEARCH_QUERY = 'SEARCH_QUERY';
+
+// Interactions
+export const SET_QUERY = 'SET_QUERY';
+export const SET_FILTERS = 'SET_FILTERS';
+export const SET_SORT = 'SET_SORT';

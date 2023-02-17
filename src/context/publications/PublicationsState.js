@@ -24,6 +24,7 @@ import {
 } from '../types';
 import PublicationsContext from './publicationsContext';
 import publicationsReducer from './publicationsReducer';
+import data from '../../data/faculty-data-jan-31-2022.json';
 
 const PublicationsState = ({ children }) => {
   const initialState = {
@@ -40,30 +41,46 @@ const PublicationsState = ({ children }) => {
   const [state, dispatch] = useReducer(publicationsReducer, initialState);
 
   const getAllPublications = useCallback(async () => {
-    const pubsRef = collection(db, 'publications');
+    // const pubsRef = collection(db, 'publications');
+    // try {
+    //   const querySnapshot = await getDocs(pubsRef);
+    //   if (querySnapshot.empty) {
+    //     dispatch({
+    //       type: PUBLICATIONS_ERROR,
+    //       payload: 'No publications found',
+    //     });
+    //   } else {
+    //     let allPublications = [];
+    //     querySnapshot.forEach((doc) => {
+    //       allPublications.push({ ...doc.data(), id: doc.id });
+    //     });
+
+    //     dispatch({
+    //       type: GET_ALL_PUBLICATIONS,
+    //       payload: allPublications,
+    //     });
+    //   }
+    // } catch (error) {
+    //   dispatch({
+    //     type: PUBLICATIONS_ERROR,
+    //     payload: `Database Error: ${error.message}`,
+    //   });
+    // }
+
+    let allPublications = [];
+    data.forEach((faculty, index) => {
+      allPublications.push({ id: index, ...faculty });
+    });
 
     try {
-      const querySnapshot = await getDocs(pubsRef);
-      if (querySnapshot.empty) {
-        dispatch({
-          type: PUBLICATIONS_ERROR,
-          payload: 'No publications found',
-        });
-      } else {
-        let allPublications = [];
-        querySnapshot.forEach((doc) => {
-          allPublications.push({ ...doc.data(), id: doc.id });
-        });
-
-        dispatch({
-          type: GET_ALL_PUBLICATIONS,
-          payload: allPublications,
-        });
-      }
+      dispatch({
+        type: GET_ALL_PUBLICATIONS,
+        payload: allPublications,
+      });
     } catch (error) {
       dispatch({
         type: PUBLICATIONS_ERROR,
-        payload: `Database Error: ${error.message}`,
+        payload: error,
       });
     }
   }, [dispatch]);

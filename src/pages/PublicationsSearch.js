@@ -20,8 +20,8 @@ export const PublicationsSearch = () => {
     }
   }, [publications, getAllPublications]);
 
-  const [localQuery, setLocalQuery] = useState('');
   const { query, setQuery } = useContext(interactionsContext);
+  const [localQuery, setLocalQuery] = useState('');
 
   const options = {
     includeScore: true,

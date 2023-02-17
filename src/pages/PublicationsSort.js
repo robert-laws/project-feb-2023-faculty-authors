@@ -41,7 +41,7 @@ export const PublicationsSort = () => {
         <div className='text-center pt-10'>
           <Spinner />
         </div>
-      ) : publications ? (
+      ) : filterPublications ? (
         <>
           <div className='py-6'>
             <div className='relative mx-auto flex flex-col max-w-8xl justify-center sm:px-2 lg:flex-row lg:px-2 xl:px-4'>

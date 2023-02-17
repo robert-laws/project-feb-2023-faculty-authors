@@ -11,6 +11,7 @@ export { Author } from './Author';
 // Publications Refactor
 export { PublicationsBase } from './PublicationsBase';
 export { PublicationsSort } from './PublicationsSort';
+export { PublicationsFilter } from './PublicationsFilter';
 
 // 404
 export { NotFound } from './NotFound';

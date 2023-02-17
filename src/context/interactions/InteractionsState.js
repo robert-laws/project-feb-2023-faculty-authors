@@ -6,7 +6,13 @@ import interactionsReducer from './interactionsReducer';
 const InteractionsState = ({ children }) => {
   const initialState = {
     query: null,
-    filters: null,
+    filters: {
+      publishingGroup: [],
+      year: [],
+      lastName: [],
+      documentType: [],
+      language: [],
+    },
     sort: {
       field: 'lastName',
       direction: 'asc',

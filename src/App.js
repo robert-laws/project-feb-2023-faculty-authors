@@ -12,6 +12,7 @@ import {
   NotFound,
   PublicationsBase,
   PublicationsSort,
+  PublicationsFilter,
 } from './pages';
 
 import { CreatePublication, UpdatePublication } from './pages/admin';
@@ -42,6 +43,7 @@ function App() {
           {/* Private Routes */}
           <Route path='/admin/new' element={<CreatePublication />} />
           <Route path='/admin/edit/:id' element={<UpdatePublication />} />
+          <Route path='/publications-filter' element={<PublicationsFilter />} />
 
           {/* 404 */}
           <Route path='*' element={<NotFound />} />

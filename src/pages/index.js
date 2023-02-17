@@ -10,6 +10,7 @@ export { Author } from './Author';
 
 // Publications Refactor
 export { PublicationsBase } from './PublicationsBase';
+export { PublicationsSort } from './PublicationsSort';
 
 // 404
 export { NotFound } from './NotFound';

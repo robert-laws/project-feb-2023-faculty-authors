@@ -24,6 +24,7 @@ import {
 } from '../types';
 import PublicationsContext from './publicationsContext';
 import publicationsReducer from './publicationsReducer';
+import { SortByTextField } from '../../utilities';
 import data from '../../data/faculty-data-jan-31-2022.json';
 
 const PublicationsState = ({ children }) => {
@@ -75,7 +76,7 @@ const PublicationsState = ({ children }) => {
     try {
       dispatch({
         type: GET_ALL_PUBLICATIONS,
-        payload: allPublications,
+        payload: SortByTextField(allPublications, 'lastName'),
       });
     } catch (error) {
       dispatch({

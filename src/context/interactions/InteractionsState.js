@@ -8,8 +8,8 @@ const InteractionsState = ({ children }) => {
     query: null,
     filters: null,
     sort: {
-      field: null,
-      direction: null,
+      field: 'lastName',
+      direction: 'asc',
     },
   };
 

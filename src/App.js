@@ -11,6 +11,7 @@ import {
   Search,
   NotFound,
   PublicationsBase,
+  PublicationsSort,
 } from './pages';
 
 import { CreatePublication, UpdatePublication } from './pages/admin';
@@ -36,6 +37,7 @@ function App() {
 
           {/* Publications Refactor */}
           <Route path='/publications-base' element={<PublicationsBase />} />
+          <Route path='/publications-sort' element={<PublicationsSort />} />
 
           {/* Private Routes */}
           <Route path='/admin/new' element={<CreatePublication />} />

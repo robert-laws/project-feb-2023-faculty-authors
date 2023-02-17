@@ -12,6 +12,7 @@ export { Author } from './Author';
 export { PublicationsBase } from './PublicationsBase';
 export { PublicationsSort } from './PublicationsSort';
 export { PublicationsFilter } from './PublicationsFilter';
+export { PublicationsSearch } from './PublicationsSearch';
 
 // 404
 export { NotFound } from './NotFound';

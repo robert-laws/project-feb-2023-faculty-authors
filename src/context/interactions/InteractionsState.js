@@ -5,7 +5,7 @@ import interactionsReducer from './interactionsReducer';
 
 const InteractionsState = ({ children }) => {
   const initialState = {
-    query: null,
+    query: '',
     filters: {
       publishingGroup: [],
       year: [],

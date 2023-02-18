@@ -1,9 +1,10 @@
-import { useContext, useEffect, useState, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Fuse from 'fuse.js';
-import PublicationsContext from '../context/publications/publicationsContext';
 import { Container, Heading, PublicationCard, Spinner } from '../components';
-import { AddToList } from '../utilities';
+import { AddToList, SortData } from '../utilities';
 import ReactPaginate from 'react-paginate';
+import PublicationsContext from '../context/publications/publicationsContext';
+import interactionsContext from '../context/interactions/interactionsContext';
 
 export const Publications = () => {
   const {
@@ -14,33 +15,32 @@ export const Publications = () => {
     getAllPublications,
     filterPublications,
     resetSinglePublicationLoading,
-    searchQuery,
-    saveSearchQuery,
   } = useContext(PublicationsContext);
+
+  const {
+    query,
+    setQuery,
+    searchResults,
+    setSearchResults,
+    sort,
+    filters,
+    filtersTouched,
+    setSort,
+    setFilters,
+    setFiltersTouched,
+  } = useContext(interactionsContext);
+
+  const [localQuery, setLocalQuery] = useState(query || '');
 
   const [currentPage, setCurrentPage] = useState(1);
   const [publicationsPerPage, setPublicationsPerPage] = useState(10);
 
-  const filterListRef = useRef([]);
-
-  //TODO: add filtersTouched to context - reset to false upon page change -> to reset display of filters/records
-  const [filtersTouched, setFiltersTouched] = useState(false);
-
-  const [filterLists, setFilterLists] = useState({
-    publishingGroup: [],
-    year: [],
-    lastName: [],
-    documentType: [],
-    language: [],
-  });
-
-  const [selectedFilters, setSelectedFilters] = useState({
-    publishingGroup: [],
-    year: [],
-    lastName: [],
-    documentType: [],
-    language: [],
-  });
+  // initializes the publications list
+  useEffect(() => {
+    if (publications.length === 0) {
+      getAllPublications();
+    }
+  }, [publications, getAllPublications]);
 
   const options = {
     includeScore: true,
@@ -58,36 +58,62 @@ export const Publications = () => {
   const fuse = new Fuse(publications, options);
 
   useEffect(() => {
-    if (publications.length === 0) {
-      getAllPublications();
-    }
-  }, [publications, getAllPublications]);
+    const searchWithFuse = (searchQuery) => {
+      if (searchQuery.length === 0) return [];
+      const results = fuse.search(searchQuery).map((result) => result.item);
+      return results;
+    };
 
-  const [searchQueryPublications, setSearchQueryPublications] = useState(
-    searchQuery || ''
-  );
+    if (query.length > 0 && publications.length > 0) {
+      setFilters({
+        publishingGroup: [],
+        year: [],
+        lastName: [],
+        documentType: [],
+        language: [],
+      });
+
+      const results = searchWithFuse(query);
+      setFiltersTouched(true);
+      filterPublications(results);
+      setSearchResults(results);
+    } else if (query.length === 0 && publications.length > 0) {
+      filterPublications(publications);
+      setSearchResults([]);
+    }
+  }, [query, publications, filterPublications]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (searchQueryPublications.length > 0) {
-      saveSearchQuery(searchQueryPublications);
-    }
+    setQuery(localQuery);
   };
 
-  useEffect(() => {
-    resetSinglePublicationLoading();
-  }, [resetSinglePublicationLoading]);
+  const filterListRef = useRef([]);
 
+  // local state for filters to populate the checkbox inputs
+  const [filterLists, setFilterLists] = useState({
+    publishingGroup: [],
+    year: [],
+    lastName: [],
+    documentType: [],
+    language: [],
+  });
+
+  const [filterListsResultCount, setFilterListsResultCount] = useState({
+    publishingGroup: [],
+    year: [],
+    lastName: [],
+    documentType: [],
+    language: [],
+  });
+
+  const [countList, setCountList] = useState([]);
+
+  // sets the initial filter lists used for checkboxes when the publications list loads
   useEffect(() => {
     if (publications.length > 0) {
       setFilterLists({
-        // publicationAffiliation: AddToList(
-        //   publications,
-        //   'publicationAffiliation'
-        // ),
         publishingGroup: AddToList(publications, 'publishingGroup'),
-        // cirsSponsored: AddToList(publications, 'cirsSponsored'),
         year: AddToList(publications, 'year'),
         lastName: AddToList(publications, 'lastName'),
         documentType: AddToList(publications, 'documentType'),
@@ -97,36 +123,84 @@ export const Publications = () => {
   }, [publications]);
 
   useEffect(() => {
-    const searchWithFuse = (query) => {
-      if (query.length === 0) return [];
-      const results = fuse.search(query).map((result) => result.item);
-      return results;
-    };
-
-    if (searchQuery && publications.length > 0) {
-      const results = searchWithFuse(searchQuery);
-      filterPublications(results);
+    if (filteredPublications.length > 0) {
+      setFilterListsResultCount({
+        publishingGroup: AddToList(filteredPublications, 'publishingGroup'),
+        year: AddToList(filteredPublications, 'year'),
+        lastName: AddToList(filteredPublications, 'lastName'),
+        documentType: AddToList(filteredPublications, 'documentType'),
+        language: AddToList(filteredPublications, 'language'),
+      });
     }
-  }, [searchQuery, publications, filterPublications]);
+  }, [filteredPublications]);
 
-  const setFilters = (list, filter) => {
+  useEffect(() => {
+    const allLists = [];
+    let flatList = [];
+    let finalList = [];
+
+    for (const property in filterListsResultCount) {
+      const list = filterListsResultCount[property];
+
+      const myList = Object.keys(list).map((key) => {
+        return [key, list[key]];
+      });
+
+      allLists.push([property, myList]);
+    }
+
+    allLists.forEach((list) => {
+      flatList = [...flatList, ...list[1]];
+    });
+
+    flatList.forEach((item) => {
+      let elementName = `${item[0].replace(/\s+/g, '-').toLowerCase()}-count`;
+      let count = item[1];
+
+      finalList.push([elementName, count]);
+    });
+
+    setCountList(finalList);
+  }, [filterListsResultCount]);
+
+  useEffect(() => {
+    if (countList.length > 0 && filtersTouched) {
+      const resultsCountList = document
+        .getElementById('filter-checkboxes')
+        .querySelectorAll('.result-count-label');
+
+      if (resultsCountList.length > 0) {
+        resultsCountList.forEach((item) => {
+          let id = item.querySelector('span').getAttribute('id');
+          if (countList.find((item) => item[0] === id)) {
+            let count = countList.find((item) => item[0] === id)[1];
+            item.querySelector('span').innerHTML = `(${count})`;
+          } else {
+            item.querySelector('span').innerHTML = '(0)';
+          }
+        });
+      }
+    }
+  }, [countList, filtersTouched]);
+
+  // updates the selected filters in InteractionsContext
+  const updateFilters = (list, filter) => {
     setFiltersTouched(true);
-    if (selectedFilters[list].includes(filter)) {
-      const newFilters = selectedFilters[list].filter(
-        (item) => item !== filter
-      );
-      setSelectedFilters({
-        ...selectedFilters,
+    if (filters[list].includes(filter)) {
+      const newFilters = filters[list].filter((item) => item !== filter);
+      setFilters({
+        ...filters,
         [list]: newFilters,
       });
     } else {
-      setSelectedFilters({
-        ...selectedFilters,
-        [list]: [...selectedFilters[list], filter],
+      setFilters({
+        ...filters,
+        [list]: [...filters[list], filter],
       });
     }
   };
 
+  // used to build the checkbox inputs for each filter list on page load
   const getLists = (lists) => {
     const allLists = [];
 
@@ -164,10 +238,13 @@ export const Publications = () => {
   };
 
   useEffect(() => {
-    const filtersArray = Object.entries(selectedFilters);
+    const filtersArray = Object.entries(filters);
 
     const applyFilters = (filterArray) => {
-      let filteredPublications = publications;
+      let filteredPublications = [];
+      searchResults.length > 0
+        ? (filteredPublications = searchResults)
+        : (filteredPublications = publications);
 
       for (let i = 0; i < filterArray.length; i++) {
         const list = filterArray[i][0];
@@ -184,10 +261,48 @@ export const Publications = () => {
     };
 
     if (filtersTouched) {
-      setCurrentPage(1);
       filterPublications(applyFilters(filtersArray));
     }
-  }, [selectedFilters]);
+  }, [filters]);
+
+  const handleListToggle = (index) => {
+    const list = filterListRef.current[index];
+    list.classList.toggle('filter-list');
+    if (list.querySelectorAll('p')[1].innerHTML === 'Show More') {
+      list.querySelectorAll('p')[1].innerHTML = 'Show Less';
+    } else {
+      list.querySelectorAll('p')[1].innerHTML = 'Show More';
+    }
+  };
+
+  useEffect(() => {
+    if (filteredPublications.length > 0 && sort) {
+      const sortedResults = SortData({
+        array: filteredPublications,
+        field: sort.field,
+      });
+
+      filterPublications(sortedResults);
+    }
+  }, [filteredPublications, filterPublications, sort]);
+
+  const handleResetClick = () => {
+    setFilters({
+      publishingGroup: [],
+      year: [],
+      lastName: [],
+      documentType: [],
+      language: [],
+    });
+
+    filterPublications(publications);
+
+    setCurrentPage(1);
+
+    setLocalQuery('');
+    setQuery('');
+    setSearchResults([]);
+  };
 
   // pagination
   const indexOfLastPublication = currentPage * publicationsPerPage;
@@ -201,92 +316,71 @@ export const Publications = () => {
     setCurrentPage(selected + 1);
   };
 
-  const handleListToggle = (index) => {
-    const list = filterListRef.current[index];
-    list.classList.toggle('filter-list');
-    if (list.querySelectorAll('p')[1].innerHTML === 'Show More') {
-      list.querySelectorAll('p')[1].innerHTML = 'Show Less';
-    } else {
-      list.querySelectorAll('p')[1].innerHTML = 'Show More';
-    }
-  };
-
-  const handleResetClick = () => {
-    setFiltersTouched(false);
-    setSelectedFilters({
-      publishingGroup: [],
-      year: [],
-      lastName: [],
-      documentType: [],
-      language: [],
-    });
-
-    setCurrentPage(1);
-    filterPublications(publications);
-    saveSearchQuery('');
-    setSearchQueryPublications('');
-
-    if (filterListRef.current.length > 0) {
-      filterListRef.current.forEach((list) => {
-        if (list) {
-          list.querySelectorAll('input').forEach((input) => {
-            input.checked = false;
-          });
-        }
-      });
-    }
-  };
+  useEffect(() => {
+    resetSinglePublicationLoading();
+  }, [resetSinglePublicationLoading]);
 
   return (
     <Container>
       <Heading>Publications</Heading>
+      <>
+        <div className='flex justify-center my-2'>
+          <form
+            className='mb-2 w-full lg:w-full flex flex-row space-x-2 px-4'
+            onSubmit={handleSubmit}
+          >
+            <input
+              type='text'
+              className='min-w-0 flex-1 form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none placeholder-gray-300'
+              id='searchQuery'
+              placeholder='Enter search'
+              value={localQuery}
+              onChange={(e) => setLocalQuery(e.target.value)}
+            />
+            <div className='sm:mt-0'>
+              <button
+                type='submit'
+                className='block w-full rounded-md border border-transparent bg-blue-500 px-2 py-2 text-base font-medium text-white shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 sm:px-10'
+              >
+                Search
+              </button>
+            </div>
+          </form>
+        </div>
+      </>
+
       {isLoading && !publicationsError ? (
         <div className='text-center pt-10'>
           <Spinner />
         </div>
-      ) : publications ? (
+      ) : filteredPublications ? (
         <>
           <div className='py-6'>
             <div className='relative mx-auto flex flex-col max-w-8xl justify-center sm:px-2 lg:flex-row lg:px-2 xl:px-4'>
               <div className='flex-auto lg:relative lg:block lg:flex-none mb-6 lg:mb-0'>
                 <div className='sticky top-[2rem] ml-5 lg:-ml-0.5 h-[calc(100vh-4.5rem)] overflow-y-auto overflow-x-hidden py-2 pl-0.5'>
                   <aside className='w-64 pr-2 xl:w-72 xl:pr-4'>
-                    <div className='self-start sticky top-0 space-y-4 overflow-y-auto'>
+                    <div className='self-start sticky top-0 overflow-y-auto'>
                       <div className='flex justify-center'>
-                        <form
-                          className='mb-2 w-full lg:w-full flex flex-col space-y-2'
-                          onSubmit={handleSubmit}
-                        >
-                          <input
-                            type='search'
-                            className='min-w-0 flex-1 form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none placeholder-gray-300'
-                            id='searchQuery'
-                            placeholder='Enter search'
-                            value={searchQueryPublications}
-                            onChange={(e) =>
-                              setSearchQueryPublications(e.target.value)
-                            }
-                          />
-                          <div className='sm:mt-0'>
-                            <button
-                              type='submit'
-                              className='block w-full rounded-md border border-transparent bg-blue-500 px-2 py-2 text-base font-medium text-white shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 sm:px-10'
-                            >
-                              Search
-                            </button>
-                          </div>
-                        </form>
+                        {/* Sort Controls */}
                       </div>
-                      <div className='sm:mt-0'>
+                      <div className='flex justify-center'>
+                        {/* Keyword Search Form */}
+                      </div>
+                      <div className='sm:mt-0 mt-2 mb-4'>
                         <button
                           onClick={handleResetClick}
                           type='button'
                           className='block w-full rounded-md border border-transparent bg-rose-500 px-2 py-2 text-base font-medium text-white shadow hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-0 sm:px-10'
                         >
-                          Reset All
+                          Reset All Filters
                         </button>
                       </div>
-                      <div className='flex flex-col pl-2'>
+                      <div
+                        id='filter-checkboxes'
+                        className='flex flex-col pl-2'
+                      >
+                        {/* Filter Checkbox Groups */}
                         {getLists(filterLists).map((list, index) => {
                           return (
                             <div
@@ -299,10 +393,6 @@ export const Publications = () => {
                               <p className='mb-2'>
                                 {list[0] === 'documentType'
                                   ? 'Document Type'
-                                  : list[0] === 'cirsSponsored'
-                                  ? 'CIRS Sponsored'
-                                  : list[0] === 'publicationAffiliation'
-                                  ? 'Publication Affiliation'
                                   : list[0] === 'publishingGroup'
                                   ? 'Author Status'
                                   : list[0] === 'lastName'
@@ -311,73 +401,51 @@ export const Publications = () => {
                                     list[0].slice(1)}
                               </p>
                               {list[1].map((option, i) => {
-                                if (
-                                  list[0] === 'cirsSponsored' &&
-                                  option[0] !== 'Yes'
-                                ) {
-                                  return null;
-                                } else {
-                                  return (
-                                    <div
-                                      className='flex items-start filter-item'
-                                      key={i}
-                                    >
-                                      <div className='flex h-5 items-center mb-1'>
-                                        <input
-                                          type='checkbox'
-                                          className='focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded'
-                                          id={option[0]}
-                                          name={option[0]}
-                                          value={option[0]}
-                                          onChange={(e) => {
-                                            setFilters(list[0], e.target.value);
-                                          }}
-                                        ></input>
-                                      </div>
-                                      <div className='ml-1 text-sm mb-1'>
-                                        <label
-                                          htmlFor={option[0]}
-                                          className='ml-1.5 font-medium text-gray-700'
-                                        >
-                                          {option[0]}{' '}
-                                          <span className='text-gray-500 font-normal'>
-                                            ({option[1]})
-                                          </span>
-                                          {/* {option[0] === ''
-                                            ? 'Not Specified'
-                                            : option[0]}{' '}
-                                                                                    */}
-                                          {/* {option[0] === 'GUQ' ? (
-                                            <div className='group inline relative'>
-                                              <span className='px-1 py-1'>*</span>
-                                              <span
-                                                className='group-hover:opacity-100 transition-opacity bg-gray-800 px-1 text-sm text-gray-100 rounded-md absolute left-3 
-        -translate-x-1 -translate-y-4 opacity-0 m-4 w-40'
-                                              >
-                                                Publications that were completed
-                                                during the authors' affiliation with
-                                                the University and list GU-Q as the
-                                                affiliation of the author(s).
-                                              </span>
-                                            </div>
-                                          ) : option[0] === 'Non-GUQ' ? (
-                                            <div className='group inline relative'>
-                                              <span className='px-1 py-1'>*</span>
-                                              <span
-                                                className='group-hover:opacity-100 transition-opacity bg-gray-800 px-1 text-sm text-gray-100 rounded-md absolute left-3 
-        -translate-x-1 -translate-y-4 opacity-0 m-4 w-40'
-                                              >
-                                                Publications by Non-GUQ members that were sponsored by CIRS.
-                                              </span>
-                                            </div>
-                                          ) : (
-                                            ''
-                                          )} */}
-                                        </label>
-                                      </div>
+                                return (
+                                  <div
+                                    className='flex items-start filter-item'
+                                    key={i}
+                                  >
+                                    <div className='flex h-5 items-center mb-1'>
+                                      <input
+                                        type='checkbox'
+                                        className='focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded'
+                                        id={option[0]}
+                                        name={option[0]}
+                                        value={option[0]}
+                                        onChange={(e) => {
+                                          updateFilters(
+                                            list[0],
+                                            e.target.value
+                                          );
+                                        }}
+                                        checked={
+                                          filters &&
+                                          filters[list[0]].includes(option[0])
+                                        }
+                                      ></input>
                                     </div>
-                                  );
-                                }
+                                    <div className='ml-1 text-sm mb-1'>
+                                      <label
+                                        htmlFor={option[0]}
+                                        className='result-count-label ml-1.5 font-medium text-gray-700'
+                                      >
+                                        {option[0]}{' '}
+                                        <span
+                                          id={`${option[0]
+                                            .replace(/\s+/g, '-')
+                                            .toLowerCase()}-count`}
+                                          name={`${option[0]
+                                            .replace(/\s+/g, '-')
+                                            .toLowerCase()}-count`}
+                                          className='text-gray-500 font-normal'
+                                        >
+                                          ({option[1]})
+                                        </span>
+                                      </label>
+                                    </div>
+                                  </div>
+                                );
                               })}
                               <p
                                 onClick={() => handleListToggle(index)}
@@ -393,83 +461,94 @@ export const Publications = () => {
                   </aside>
                 </div>
               </div>
-              <div className='min-w-0 max-w-3xl flex-auto px-4 py-2 lg:max-w-6xl lg:pr-0 lg:pl-8 xl:px-10'>
+              <div className='min-w-0 max-w-3xl flex-auto pl-4 py-2 lg:max-w-6xl lg:pr-0 lg:pl-8 xl:pl-10'>
                 <main className=''>
-                  <div className='mb-2 -mt-2'>
-                    <span className='font-bold text-lg'>
+                  <div className='mb-2 -mt-2 flex justify-between'>
+                    <div className='font-bold text-lg'>
                       {filteredPublications.length} Results
-                    </span>
+                    </div>
+                    <div className='flex items-center'>
+                      <div>
+                        {/* Sort Controls */}
+                        {sort && (
+                          <div className='flex items-center'>
+                            <label
+                              htmlFor='sortOptions'
+                              className='text-sm font-medium text-gray-700 mr-2'
+                            >
+                              Sort by
+                            </label>
+                            <select
+                              id='sortOptions'
+                              name='sortOptions'
+                              className='rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
+                              value={sort.field}
+                              onChange={(e) => {
+                                setSort({
+                                  field: e.target.value,
+                                  direction:
+                                    e.target.value === 'year-newest'
+                                      ? 'desc'
+                                      : 'asc',
+                                });
+                              }}
+                            >
+                              <option value='author'>Author</option>
+                              <option value='title'>Title</option>
+                              <option value='year-newest'>Year - Newest</option>
+                              <option value='year-oldest'>Year - Oldest</option>
+                            </select>
+                          </div>
+                        )}
+                      </div>
+                      <div>
+                        <select
+                          id='currentPageSize'
+                          name='currentPageSize'
+                          className='w-full lg:w-auto ml-0 lg:ml-3 inline rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
+                          value={publicationsPerPage}
+                          onChange={(e) => {
+                            setPublicationsPerPage(Number(e.target.value));
+                          }}
+                        >
+                          {[10, 20, 30, 40, 50].map((pageSize) => (
+                            <option key={pageSize} value={pageSize}>
+                              Show {pageSize}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
                   </div>
                   <div className=' space-y-4'>
-                    {filteredPublications ? (
-                      filteredPublications.length > 0 ? (
-                        currentPublications.map((publication) => (
-                          <PublicationCard
-                            key={publication.pubId}
-                            docId={publication.id}
-                            authorId={publication.authorId}
-                            title={
-                              publication.title === ''
-                                ? publication.sourceTitle
-                                : publication.title
-                            }
-                            sourceTitle={publication.sourceTitle}
-                            author={`${publication.firstName} ${publication.lastName}`}
-                            year={publication.year}
-                            language={
-                              publication.language === ''
-                                ? 'Not Specified'
-                                : publication.language
-                            }
-                            documentType={publication.documentType}
-                            doi={publication.doi}
-                            link={publication.link}
-                          />
-                        ))
-                      ) : (
-                        <div>
-                          <div className='whitespace-normal py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
-                            No Publications
-                          </div>
-                        </div>
-                      )
+                    {/* Publications Result List */}
+                    {filteredPublications.length > 0 ? (
+                      currentPublications.map((publication) => (
+                        <PublicationCard
+                          key={publication.pubId}
+                          docId={publication.id}
+                          authorId={publication.authorId}
+                          title={
+                            publication.title === ''
+                              ? publication.sourceTitle
+                              : publication.title
+                          }
+                          sourceTitle={publication.sourceTitle}
+                          author={`${publication.firstName} ${publication.lastName}`}
+                          year={publication.year}
+                          language={publication.language}
+                          documentType={publication.documentType}
+                          doi={publication.doi}
+                          link={publication.link}
+                        />
+                      ))
                     ) : (
-                      <div className='mt-4 flex flex-col'>
-                        Loading Publications...
+                      <div>
+                        <div className='whitespace-normal py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6'>
+                          No Publications
+                        </div>
                       </div>
                     )}
-                    <ReactPaginate
-                      onPageChange={paginate}
-                      pageCount={Math.ceil(
-                        filteredPublications.length / publicationsPerPage
-                      )}
-                      previousLabel={'Prev'}
-                      nextLabel={'Next'}
-                      containerClassName={'pagination'}
-                      pageLinkClassName={'page-number'}
-                      previousLinkClassName={'page-number'}
-                      nextLinkClassName={'page-number'}
-                      activeLinkClassName={'active'}
-                      disabledClassName={'disabled'}
-                    />
-                    <span className='hidden lg:inline-block font-medium ml-2'>
-                      Results Per Page
-                    </span>
-                    <select
-                      id='currentPageSize'
-                      name='currentPageSize'
-                      className='w-full lg:w-auto mt-8 lg:mt-8 ml-0 lg:ml-3 inline rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
-                      value={publicationsPerPage}
-                      onChange={(e) => {
-                        setPublicationsPerPage(Number(e.target.value));
-                      }}
-                    >
-                      {[10, 20, 30, 40, 50].map((pageSize) => (
-                        <option key={pageSize} value={pageSize}>
-                          Show {pageSize}
-                        </option>
-                      ))}
-                    </select>
                   </div>
                 </main>
               </div>
@@ -479,7 +558,25 @@ export const Publications = () => {
       ) : (
         <div>No Publications</div>
       )}
-      {publicationsError && <div>{publicationsError}</div>}
+      {publicationsError && (
+        <div className='font-bold'>{publicationsError}</div>
+      )}
+      <div>
+        <ReactPaginate
+          onPageChange={paginate}
+          pageCount={Math.ceil(
+            filteredPublications.length / publicationsPerPage
+          )}
+          previousLabel={'Prev'}
+          nextLabel={'Next'}
+          containerClassName={'pagination'}
+          pageLinkClassName={'page-number'}
+          previousLinkClassName={'page-number'}
+          nextLinkClassName={'page-number'}
+          activeLinkClassName={'active'}
+          disabledClassName={'disabled'}
+        />
+      </div>
     </Container>
   );
 };

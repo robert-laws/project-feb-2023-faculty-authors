@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PublicationsContext from '../context/publications/publicationsContext';
+import interactionsContext from '../context/interactions/interactionsContext';
 import { Container } from '../components';
 // import { DataLoadPublications } from '../utilities';
 // import { DataLoadAuthors } from '../utilities';
@@ -11,14 +11,14 @@ export const Home = () => {
 
   const navigate = useNavigate();
 
-  const { saveSearchQuery } = useContext(PublicationsContext);
+  const { setQuery } = useContext(interactionsContext);
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (searchQuery.length > 0) {
-      saveSearchQuery(searchQuery);
+      setQuery(searchQuery);
       navigate('/publications');
     }
   };

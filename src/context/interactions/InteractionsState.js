@@ -4,6 +4,7 @@ import {
   SET_FILTERS,
   SET_SORT,
   TOGGLE_FILTERS_TOUCHED,
+  SEARCH_RESULTS,
 } from '../types';
 import InteractionsContext from './interactionsContext';
 import interactionsReducer from './interactionsReducer';
@@ -23,6 +24,7 @@ const InteractionsState = ({ children }) => {
       direction: 'asc',
     },
     filtersTouched: false,
+    searchResults: [],
   };
 
   const [state, dispatch] = useReducer(interactionsReducer, initialState);
@@ -67,6 +69,16 @@ const InteractionsState = ({ children }) => {
     [dispatch]
   );
 
+  const setSearchResults = useCallback(
+    (searchResults) => {
+      dispatch({
+        type: SEARCH_RESULTS,
+        payload: searchResults,
+      });
+    },
+    [dispatch]
+  );
+
   return (
     <InteractionsContext.Provider
       value={{
@@ -74,10 +86,12 @@ const InteractionsState = ({ children }) => {
         filters: state.filters,
         sort: state.sort,
         filtersTouched: state.filtersTouched,
+        searchResults: state.searchResults,
         setQuery,
         setFilters,
         setSort,
         setFiltersTouched,
+        setSearchResults,
       }}
     >
       {children}

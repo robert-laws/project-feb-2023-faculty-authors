@@ -3,6 +3,7 @@ import {
   SET_FILTERS,
   SET_SORT,
   TOGGLE_FILTERS_TOUCHED,
+  SEARCH_RESULTS,
 } from '../types';
 
 const interactionsReducer = (state, action) => {
@@ -29,6 +30,12 @@ const interactionsReducer = (state, action) => {
       return {
         ...state,
         filtersTouched: action.payload,
+      };
+
+    case SEARCH_RESULTS:
+      return {
+        ...state,
+        searchResults: action.payload,
       };
 
     default:

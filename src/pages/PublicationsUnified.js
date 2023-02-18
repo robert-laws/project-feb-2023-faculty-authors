@@ -24,7 +24,7 @@ export const PublicationsUnified = () => {
     setSort,
     setFilters,
     setQuery,
-    toggleFiltersTouched,
+    setFiltersTouched,
   } = useContext(interactionsContext);
   const [localQuery, setLocalQuery] = useState(query || '');
   const [searchResults, setSearchResults] = useState([]);
@@ -149,7 +149,7 @@ export const PublicationsUnified = () => {
 
   // updates the selected filters in InteractionsContext
   const updateFilters = (list, filter) => {
-    toggleFiltersTouched();
+    setFiltersTouched(true);
 
     if (filters[list].includes(filter)) {
       const newFilters = filters[list].filter((item) => item !== filter);
@@ -264,6 +264,7 @@ export const PublicationsUnified = () => {
       const results = searchWithFuse(query);
       filterPublications(results);
       setSearchResults(results);
+      setFiltersTouched(true);
     } else if (query.length === 0 && publications.length > 0) {
       filterPublications(publications);
       setSearchResults([]);
@@ -275,7 +276,7 @@ export const PublicationsUnified = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    toggleFiltersTouched();
+    setFiltersTouched(true);
 
     // reset filters
     setFilters({

@@ -73,10 +73,12 @@ export const PublicationsUnifiedTwo = () => {
       });
 
       const results = searchWithFuse(query);
-      filterPublications(results);
       setFiltersTouched(true);
+      filterPublications(results);
+      setSearchResults(results);
     } else if (query.length === 0 && publications.length > 0) {
       filterPublications(publications);
+      setSearchResults([]);
     }
   }, [query, publications, filterPublications]);
 
@@ -241,7 +243,10 @@ export const PublicationsUnifiedTwo = () => {
     const filtersArray = Object.entries(filters);
 
     const applyFilters = (filterArray) => {
-      let filteredPublications = publications;
+      let filteredPublications = [];
+      searchResults.length > 0
+        ? (filteredPublications = searchResults)
+        : (filteredPublications = publications);
 
       for (let i = 0; i < filterArray.length; i++) {
         const list = filterArray[i][0];

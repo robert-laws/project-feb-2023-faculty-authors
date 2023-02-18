@@ -90,12 +90,6 @@ const publicationsReducer = (state, action) => {
         ),
       };
 
-    case SEARCH_QUERY:
-      return {
-        ...state,
-        searchQuery: action.payload,
-      };
-
     default:
       return state;
   }

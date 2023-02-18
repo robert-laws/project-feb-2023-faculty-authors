@@ -20,7 +20,6 @@ import {
   CREATE_SINGLE_PUBLICATION,
   UPDATE_SINGLE_PUBLICATION,
   DELETE_SINGLE_PUBLICATION,
-  SEARCH_QUERY,
 } from '../types';
 import PublicationsContext from './publicationsContext';
 import publicationsReducer from './publicationsReducer';
@@ -36,7 +35,6 @@ const PublicationsState = ({ children }) => {
     singlePublication: null,
     isLoadingSingle: true,
     singlePublicationError: null,
-    searchQuery: null,
   };
 
   const [state, dispatch] = useReducer(publicationsReducer, initialState);
@@ -209,16 +207,6 @@ const PublicationsState = ({ children }) => {
     [dispatch]
   );
 
-  const saveSearchQuery = useCallback(
-    (query) => {
-      dispatch({
-        type: SEARCH_QUERY,
-        payload: query,
-      });
-    },
-    [dispatch]
-  );
-
   return (
     <PublicationsContext.Provider
       value={{
@@ -229,7 +217,6 @@ const PublicationsState = ({ children }) => {
         singlePublication: state.singlePublication,
         isLoadingSingle: state.isLoadingSingle,
         singlePublicationError: state.singlePublicationError,
-        searchQuery: state.searchQuery,
         getAllPublications,
         filterPublications,
         getSinglePublicationById,
@@ -237,7 +224,6 @@ const PublicationsState = ({ children }) => {
         createSinglePublication,
         updateSinglePublication,
         deleteSinglePublication,
-        saveSearchQuery,
       }}
     >
       {children}

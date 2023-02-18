@@ -40,12 +40,8 @@ function App() {
           <Route path='/search' element={<Search />} />
 
           {/* Publications Refactor */}
-          <Route path='/publications-base' element={<PublicationsBase />} />
+          {/* <Route path='/publications-base' element={<PublicationsBase />} />
           <Route path='/publications-sort' element={<PublicationsSort />} />
-
-          {/* Private Routes */}
-          <Route path='/admin/new' element={<CreatePublication />} />
-          <Route path='/admin/edit/:id' element={<UpdatePublication />} />
           <Route path='/publications-filter' element={<PublicationsFilter />} />
           <Route path='/publications-search' element={<PublicationsSearch />} />
           <Route
@@ -55,7 +51,11 @@ function App() {
           <Route
             path='/publications-unified-2'
             element={<PublicationsUnifiedTwo />}
-          />
+          /> */}
+
+          {/* Private Routes */}
+          <Route path='/admin/new' element={<CreatePublication />} />
+          <Route path='/admin/edit/:id' element={<UpdatePublication />} />
 
           {/* 404 */}
           <Route path='*' element={<NotFound />} />

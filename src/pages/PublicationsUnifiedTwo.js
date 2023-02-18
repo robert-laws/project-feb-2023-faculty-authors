@@ -14,6 +14,7 @@ export const PublicationsUnifiedTwo = () => {
     publicationsError,
     getAllPublications,
     filterPublications,
+    resetSinglePublicationLoading,
   } = useContext(PublicationsContext);
 
   const {
@@ -84,9 +85,6 @@ export const PublicationsUnifiedTwo = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // reset filters
-
     setQuery(localQuery);
   };
 
@@ -299,19 +297,7 @@ export const PublicationsUnifiedTwo = () => {
 
     filterPublications(publications);
 
-    // if (filterListRef.current.length > 0) {
-    //   filterListRef.current.forEach((list) => {
-    //     if (list) {
-    //       list.querySelectorAll('input').forEach((input) => {
-    //         input.checked = false;
-    //       });
-    //     }
-    //   });
-    // }
-
     setCurrentPage(1);
-    // saveSearchQuery('');
-    // setSearchQueryPublications('');
 
     setLocalQuery('');
     setQuery('');
@@ -329,6 +315,10 @@ export const PublicationsUnifiedTwo = () => {
   const paginate = ({ selected }) => {
     setCurrentPage(selected + 1);
   };
+
+  useEffect(() => {
+    resetSinglePublicationLoading();
+  }, [resetSinglePublicationLoading]);
 
   return (
     <Container>

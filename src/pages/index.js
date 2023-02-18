@@ -14,6 +14,7 @@ export { PublicationsSort } from './PublicationsSort';
 export { PublicationsFilter } from './PublicationsFilter';
 export { PublicationsSearch } from './PublicationsSearch';
 export { PublicationsUnified } from './PublicationsUnified';
+export { PublicationsUnifiedTwo } from './PublicationsUnifiedTwo';
 
 // 404
 export { NotFound } from './NotFound';

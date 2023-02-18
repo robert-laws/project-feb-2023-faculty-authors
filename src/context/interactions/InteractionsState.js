@@ -57,11 +57,15 @@ const InteractionsState = ({ children }) => {
     [dispatch]
   );
 
-  const toggleFiltersTouched = useCallback(() => {
-    dispatch({
-      type: TOGGLE_FILTERS_TOUCHED,
-    });
-  }, [dispatch]);
+  const setFiltersTouched = useCallback(
+    (boolean) => {
+      dispatch({
+        type: TOGGLE_FILTERS_TOUCHED,
+        payload: boolean,
+      });
+    },
+    [dispatch]
+  );
 
   return (
     <InteractionsContext.Provider
@@ -73,7 +77,7 @@ const InteractionsState = ({ children }) => {
         setQuery,
         setFilters,
         setSort,
-        toggleFiltersTouched,
+        setFiltersTouched,
       }}
     >
       {children}

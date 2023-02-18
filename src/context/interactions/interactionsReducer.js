@@ -28,7 +28,7 @@ const interactionsReducer = (state, action) => {
     case TOGGLE_FILTERS_TOUCHED:
       return {
         ...state,
-        filtersTouched: true,
+        filtersTouched: action.payload,
       };
 
     default:

@@ -1,10 +1,11 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Container, Heading, PublicationCard, Spinner } from '../components';
-import { AddToList } from '../utilities';
+import { AddToList, SortData } from '../utilities';
+import ReactPaginate from 'react-paginate';
 import PublicationsContext from '../context/publications/publicationsContext';
 import interactionsContext from '../context/interactions/interactionsContext';
 
-export const PublicationsFilter = () => {
+export const PublicationsUnifiedTwo = () => {
   const {
     publications,
     filteredPublications,
@@ -14,7 +15,17 @@ export const PublicationsFilter = () => {
     filterPublications,
   } = useContext(PublicationsContext);
 
-  const { filters, setFilters } = useContext(interactionsContext);
+  const {
+    sort,
+    filters,
+    filtersTouched,
+    setSort,
+    setFilters,
+    setFiltersTouched,
+  } = useContext(interactionsContext);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [publicationsPerPage, setPublicationsPerPage] = useState(10);
 
   // initializes the publications list
   useEffect(() => {
@@ -25,7 +36,7 @@ export const PublicationsFilter = () => {
 
   const filterListRef = useRef([]);
 
-  const [filtersTouched, setFiltersTouched] = useState(false);
+  // const [filtersTouched, setFiltersTouched] = useState(false);
 
   // local state for filters to populate the checkbox inputs
   const [filterLists, setFilterLists] = useState({
@@ -209,6 +220,17 @@ export const PublicationsFilter = () => {
     }
   };
 
+  useEffect(() => {
+    if (filteredPublications.length > 0 && sort) {
+      const sortedResults = SortData({
+        array: filteredPublications,
+        field: sort.field,
+      });
+
+      filterPublications(sortedResults);
+    }
+  }, [filteredPublications, filterPublications, sort]);
+
   const handleResetClick = () => {
     setFilters({
       publishingGroup: [],
@@ -217,21 +239,34 @@ export const PublicationsFilter = () => {
       documentType: [],
       language: [],
     });
+
     filterPublications(publications);
 
-    if (filterListRef.current.length > 0) {
-      filterListRef.current.forEach((list) => {
-        if (list) {
-          list.querySelectorAll('input').forEach((input) => {
-            input.checked = false;
-          });
-        }
-      });
-    }
+    // if (filterListRef.current.length > 0) {
+    //   filterListRef.current.forEach((list) => {
+    //     if (list) {
+    //       list.querySelectorAll('input').forEach((input) => {
+    //         input.checked = false;
+    //       });
+    //     }
+    //   });
+    // }
 
-    // setCurrentPage(1);
+    setCurrentPage(1);
     // saveSearchQuery('');
     // setSearchQueryPublications('');
+  };
+
+  // pagination
+  const indexOfLastPublication = currentPage * publicationsPerPage;
+  const indexOfFirstPublication = indexOfLastPublication - publicationsPerPage;
+  const currentPublications = filteredPublications.slice(
+    indexOfFirstPublication,
+    indexOfLastPublication
+  );
+
+  const paginate = ({ selected }) => {
+    setCurrentPage(selected + 1);
   };
 
   return (
@@ -352,15 +387,67 @@ export const PublicationsFilter = () => {
               </div>
               <div className='min-w-0 max-w-3xl flex-auto px-4 py-2 lg:max-w-6xl lg:pr-0 lg:pl-8 xl:px-10'>
                 <main className=''>
-                  <div className='mb-2 -mt-2'>
-                    <span className='font-bold text-lg'>
+                  <div className='mb-2 -mt-2 flex justify-between'>
+                    <div className='font-bold text-lg'>
                       {filteredPublications.length} Results
-                    </span>
+                    </div>
+                    <div className='flex items-center'>
+                      <div>
+                        {/* Sort Controls */}
+                        {sort && (
+                          <div className='flex items-center'>
+                            <label
+                              htmlFor='sortOptions'
+                              className='text-sm font-medium text-gray-700 mr-2'
+                            >
+                              Sort by
+                            </label>
+                            <select
+                              id='sortOptions'
+                              name='sortOptions'
+                              className='rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
+                              value={sort.field}
+                              onChange={(e) => {
+                                setSort({
+                                  field: e.target.value,
+                                  direction:
+                                    e.target.value === 'year-newest'
+                                      ? 'desc'
+                                      : 'asc',
+                                });
+                              }}
+                            >
+                              <option value='author'>Author</option>
+                              <option value='title'>Title</option>
+                              <option value='year-newest'>Year - Newest</option>
+                              <option value='year-oldest'>Year - Oldest</option>
+                            </select>
+                          </div>
+                        )}
+                      </div>
+                      <div>
+                        <select
+                          id='currentPageSize'
+                          name='currentPageSize'
+                          className='w-full lg:w-auto ml-0 lg:ml-3 inline rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
+                          value={publicationsPerPage}
+                          onChange={(e) => {
+                            setPublicationsPerPage(Number(e.target.value));
+                          }}
+                        >
+                          {[10, 20, 30, 40, 50].map((pageSize) => (
+                            <option key={pageSize} value={pageSize}>
+                              Show {pageSize}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
                   </div>
                   <div className=' space-y-4'>
                     {/* Publications Result List */}
                     {filteredPublications.length > 0 ? (
-                      filteredPublications.map((publication) => (
+                      currentPublications.map((publication) => (
                         <PublicationCard
                           key={publication.pubId}
                           docId={publication.id}
@@ -398,6 +485,22 @@ export const PublicationsFilter = () => {
       {publicationsError && (
         <div className='font-bold'>{publicationsError}</div>
       )}
+      <div>
+        <ReactPaginate
+          onPageChange={paginate}
+          pageCount={Math.ceil(
+            filteredPublications.length / publicationsPerPage
+          )}
+          previousLabel={'Prev'}
+          nextLabel={'Next'}
+          containerClassName={'pagination'}
+          pageLinkClassName={'page-number'}
+          previousLinkClassName={'page-number'}
+          nextLinkClassName={'page-number'}
+          activeLinkClassName={'active'}
+          disabledClassName={'disabled'}
+        />
+      </div>
     </Container>
   );
 };

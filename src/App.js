@@ -15,6 +15,7 @@ import {
   PublicationsFilter,
   PublicationsSearch,
   PublicationsUnified,
+  PublicationsUnifiedTwo,
 } from './pages';
 
 import { CreatePublication, UpdatePublication } from './pages/admin';
@@ -50,6 +51,10 @@ function App() {
           <Route
             path='/publications-unified'
             element={<PublicationsUnified />}
+          />
+          <Route
+            path='/publications-unified-2'
+            element={<PublicationsUnifiedTwo />}
           />
 
           {/* 404 */}

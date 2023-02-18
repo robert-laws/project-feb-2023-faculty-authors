@@ -436,6 +436,10 @@ export const PublicationsUnified = () => {
                                             e.target.value
                                           );
                                         }}
+                                        checked={
+                                          filters &&
+                                          filters[list[0]].includes(option[0])
+                                        }
                                       ></input>
                                     </div>
                                     <div className='ml-1 text-sm mb-1'>

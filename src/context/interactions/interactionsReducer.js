@@ -1,4 +1,9 @@
-import { SET_QUERY, SET_FILTERS, SET_SORT } from '../types';
+import {
+  SET_QUERY,
+  SET_FILTERS,
+  SET_SORT,
+  TOGGLE_FILTERS_TOUCHED,
+} from '../types';
 
 const interactionsReducer = (state, action) => {
   switch (action.type) {
@@ -18,6 +23,12 @@ const interactionsReducer = (state, action) => {
       return {
         ...state,
         sort: action.payload,
+      };
+
+    case TOGGLE_FILTERS_TOUCHED:
+      return {
+        ...state,
+        filtersTouched: true,
       };
 
     default:

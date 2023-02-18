@@ -1,5 +1,10 @@
 import { useReducer, useCallback } from 'react';
-import { SET_QUERY, SET_FILTERS, SET_SORT } from '../types';
+import {
+  SET_QUERY,
+  SET_FILTERS,
+  SET_SORT,
+  TOGGLE_FILTERS_TOUCHED,
+} from '../types';
 import InteractionsContext from './interactionsContext';
 import interactionsReducer from './interactionsReducer';
 
@@ -17,6 +22,7 @@ const InteractionsState = ({ children }) => {
       field: 'lastName',
       direction: 'asc',
     },
+    filtersTouched: false,
   };
 
   const [state, dispatch] = useReducer(interactionsReducer, initialState);
@@ -51,15 +57,23 @@ const InteractionsState = ({ children }) => {
     [dispatch]
   );
 
+  const toggleFiltersTouched = useCallback(() => {
+    dispatch({
+      type: TOGGLE_FILTERS_TOUCHED,
+    });
+  }, [dispatch]);
+
   return (
     <InteractionsContext.Provider
       value={{
         query: state.query,
         filters: state.filters,
         sort: state.sort,
+        filtersTouched: state.filtersTouched,
         setQuery,
         setFilters,
         setSort,
+        toggleFiltersTouched,
       }}
     >
       {children}

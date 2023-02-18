@@ -16,9 +16,17 @@ export const PublicationsUnified = () => {
     filterPublications,
   } = useContext(PublicationsContext);
 
-  const { sort, filters, query, setSort, setFilters, setQuery } =
-    useContext(interactionsContext);
-  const [localQuery, setLocalQuery] = useState('');
+  const {
+    sort,
+    filters,
+    query,
+    filtersTouched,
+    setSort,
+    setFilters,
+    setQuery,
+    toggleFiltersTouched,
+  } = useContext(interactionsContext);
+  const [localQuery, setLocalQuery] = useState(query || '');
   const [searchResults, setSearchResults] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,8 +53,6 @@ export const PublicationsUnified = () => {
   };
 
   const fuse = new Fuse(publications, options);
-
-  const [filtersTouched, setFiltersTouched] = useState(false);
 
   // local state for filters to populate the checkbox inputs
   const [filterLists, setFilterLists] = useState({
@@ -143,7 +149,8 @@ export const PublicationsUnified = () => {
 
   // updates the selected filters in InteractionsContext
   const updateFilters = (list, filter) => {
-    setFiltersTouched(true);
+    toggleFiltersTouched();
+
     if (filters[list].includes(filter)) {
       const newFilters = filters[list].filter((item) => item !== filter);
       setFilters({
@@ -268,6 +275,8 @@ export const PublicationsUnified = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    toggleFiltersTouched();
+
     // reset filters
     setFilters({
       publishingGroup: [],
@@ -298,6 +307,7 @@ export const PublicationsUnified = () => {
       documentType: [],
       language: [],
     });
+
     filterPublications(publications);
 
     if (filterListRef.current.length > 0) {

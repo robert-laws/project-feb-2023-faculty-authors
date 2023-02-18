@@ -31,3 +31,4 @@ export const SEARCH_QUERY = 'SEARCH_QUERY';
 export const SET_QUERY = 'SET_QUERY';
 export const SET_FILTERS = 'SET_FILTERS';
 export const SET_SORT = 'SET_SORT';
+export const TOGGLE_FILTERS_TOUCHED = 'TOGGLE_FILTERS_TOUCHED';

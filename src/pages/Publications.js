@@ -334,20 +334,29 @@ export const Publications = () => {
         </div>
       ) : filteredPublications ? (
         <>
-          <div className='flex justify-center my-2'>
+          <div className='flex py-6 justify-center my-2 bg-gray-100 rounded-lg'>
             <form
-              className='mb-2 w-full lg:w-full flex flex-row space-x-2 px-4'
+              className='w-full lg:w-2/3 flex flex-row items-center space-x-2 px-4'
               onSubmit={handleSubmit}
             >
-              <input
-                type='text'
-                className='min-w-0 flex-1 form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none placeholder-gray-300'
-                id='searchQuery'
-                placeholder='Enter search'
-                value={localQuery}
-                onChange={(e) => setLocalQuery(e.target.value)}
-              />
-              <div className='sm:mt-0'>
+              <div className='flex flex-col min-w-0 flex-1 w-full px-3 py-1.5 mb-1'>
+                <label
+                  htmlFor='searchQuery'
+                  className='block text-sm font-medium text-gray-700'
+                >
+                  Enter your search terms
+                </label>
+                <input
+                  type='text'
+                  className='form-control min-w-0 flex-1 w-full text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none placeholder-gray-300'
+                  id='searchQuery'
+                  name='searchQuery'
+                  placeholder='ex. Qatar, "Gulf Cooperation Council", Al-Jazeera'
+                  value={localQuery}
+                  onChange={(e) => setLocalQuery(e.target.value)}
+                />
+              </div>
+              <div className='h-6'>
                 <button
                   type='submit'
                   className='block w-full rounded-md border border-transparent bg-blue-500 px-2 py-2 text-base font-medium text-white shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 sm:px-10'
@@ -375,7 +384,7 @@ export const Publications = () => {
                           type='button'
                           className='block w-full rounded-md border border-transparent bg-rose-500 px-2 py-2 text-base font-medium text-white shadow hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-0 sm:px-10'
                         >
-                          Reset All Filters
+                          Clear All
                         </button>
                       </div>
                       <div

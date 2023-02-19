@@ -95,7 +95,7 @@ export const CreatePublication = () => {
 
   return (
     <Container>
-      <Heading>Publication</Heading>
+      <Heading>Add New Publication</Heading>
       <div className='container mx-auto px-4 py-4'>
         <form
           className='space-y-8 divide-y divide-gray-200'
@@ -706,7 +706,7 @@ export const CreatePublication = () => {
                   </div>
                 </div>
 
-                <div className='sm:col-span-4'>
+                <div className='sm:col-span-3'>
                   <label
                     htmlFor='sustainableDevelopmentGoals'
                     className='block text-sm font-medium text-gray-700'
@@ -827,7 +827,7 @@ export const CreatePublication = () => {
                   </div>
                 </div>
 
-                <div className='sm:col-span-2'>
+                {/* <div className='sm:col-span-2'>
                   <label
                     htmlFor='fullText'
                     className='block text-sm font-medium text-gray-700'
@@ -852,7 +852,7 @@ export const CreatePublication = () => {
                       Upload
                     </button>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

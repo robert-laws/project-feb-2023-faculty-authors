@@ -1,4 +1,4 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 
 export const Footer = () => {
   const navigation = [
@@ -18,12 +18,12 @@ export const Footer = () => {
         >
           {navigation.map((item) => (
             <div key={item.name} className='pb-6'>
-              <a
-                href={item.href}
+              <Link
+                to={item.href}
                 className='text-sm leading-6 text-white hover:text-cyan-50'
               >
                 {item.name}
-              </a>
+              </Link>
             </div>
           ))}
         </nav>

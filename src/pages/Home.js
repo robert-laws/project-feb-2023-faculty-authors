@@ -29,7 +29,7 @@ export const Home = () => {
       {/* <DataLoadAuthors /> */}
       <main>
         <div className='relative px-6 lg:px-8'>
-          <div className='mx-auto max-w-4xl py-16 sm:py-20 lg:py-24'>
+          <div className='mx-auto max-w-4xl py-14 sm:py-16 lg:py-18'>
             <div className='text-center'>
               <h1 className='text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl'>
                 GU-Q Research
@@ -50,7 +50,7 @@ export const Home = () => {
                   <div className='mt-4 sm:mt-0 sm:ml-3'>
                     <button
                       type='submit'
-                      className='block w-full rounded-md border border-transparent bg-rose-500 px-5 py-3 text-base font-medium text-white shadow hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:px-10'
+                      className='block w-full rounded-md border border-transparent bg-blue-500 px-5 py-3 text-base font-medium text-white shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:px-10'
                     >
                       Search
                     </button>

@@ -1,4 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Fuse from 'fuse.js';
 import { Container, Heading, PublicationCard, Spinner } from '../components';
 import { AddToList, SortData } from '../utilities';
@@ -326,7 +327,15 @@ export const Publications = () => {
 
   return (
     <Container>
-      <Heading>Publications</Heading>
+      <div className='flex justify-between'>
+        <Heading>Publications</Heading>
+        <Link
+          to='/admin/new'
+          className='block w-auto rounded-md border border-transparent bg-cyan-500 px-1 py-1 text-base font-medium text-white shadow hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-0 sm:px-4'
+        >
+          Add New Publication
+        </Link>
+      </div>
 
       {isLoading && !publicationsError ? (
         <div className='text-center pt-10'>
@@ -334,7 +343,7 @@ export const Publications = () => {
         </div>
       ) : filteredPublications ? (
         <>
-          <div className='flex py-6 justify-center my-2 bg-gray-100 rounded-lg'>
+          <div className='flex py-5 justify-center my-2 bg-gray-100 rounded-lg'>
             <form
               className='w-full lg:w-2/3 flex flex-row items-center space-x-2 px-4'
               onSubmit={handleSubmit}

@@ -721,7 +721,7 @@ export const UpdatePublication = () => {
                     </div>
                   </div>
 
-                  <div className='sm:col-span-4'>
+                  <div className='sm:col-span-3'>
                     <label
                       htmlFor='sustainableDevelopmentGoals'
                       className='block text-sm font-medium text-gray-700'
@@ -842,7 +842,7 @@ export const UpdatePublication = () => {
                     </div>
                   </div>
 
-                  <div className='sm:col-span-2'>
+                  {/* <div className='sm:col-span-2'>
                     <label
                       htmlFor='fullText'
                       className='block text-sm font-medium text-gray-700'
@@ -867,7 +867,7 @@ export const UpdatePublication = () => {
                         Upload
                       </button>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

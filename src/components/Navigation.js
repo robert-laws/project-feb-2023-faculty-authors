@@ -9,7 +9,7 @@ export const Navigation = () => {
     { name: 'Authors', href: '/authors' },
     { name: 'Annual Reports', href: '/annual-reports' },
     { name: 'Contact', href: '/contact' },
-    { name: 'New', href: '/admin/new' },
+    // { name: 'New', href: '/admin/new' },
   ];
 
   return (

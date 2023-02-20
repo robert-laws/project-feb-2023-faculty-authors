@@ -8,6 +8,7 @@ export const Navigation = () => {
     { name: 'Publications', href: '/publications' },
     { name: 'Authors', href: '/authors' },
     { name: 'Annual Reports', href: '/annual-reports' },
+    { name: 'Research Impact', href: '/research-impact' },
     { name: 'Contact', href: '/contact' },
     // { name: 'New', href: '/admin/new' },
   ];

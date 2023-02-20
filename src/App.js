@@ -5,17 +5,12 @@ import {
   Publications,
   Publication,
   AnnualReports,
+  ResearchImpact,
   Contact,
   Authors,
   Author,
   Search,
   NotFound,
-  PublicationsBase,
-  PublicationsSort,
-  PublicationsFilter,
-  PublicationsSearch,
-  PublicationsUnified,
-  PublicationsUnifiedTwo,
 } from './pages';
 
 import { CreatePublication, UpdatePublication } from './pages/admin';
@@ -31,6 +26,7 @@ function App() {
           <Route path='/publications' element={<Publications />} />
           <Route path='/publications/:id' element={<Publication />} />
           <Route path='/annual-reports' element={<AnnualReports />} />
+          <Route path='/research-impact' element={<ResearchImpact />} />
           <Route path='/contact' element={<Contact />} />
 
           <Route path='/authors' element={<Authors />} />
